@@ -100,6 +100,12 @@ export function ProjectDetailPage() {
             </div>
             {!isEditing && (
               <div className="flex gap-2" role="group" aria-label="プロジェクト操作">
+                <Link
+                  href={`/projects/${projectId}/backlog`}
+                  variant="secondary"
+                >
+                  バックログ
+                </Link>
                 <Button
                   onClick={() => setIsEditing(true)}
                   variant="primary"

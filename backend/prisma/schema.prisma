@@ -25,6 +25,27 @@ enum ProjectStatus {
   ARCHIVED
 }
 
+enum TaskStatus {
+  BACKLOG
+  SPRINT_BACKLOG
+  IN_PROGRESS
+  REVIEW
+  DONE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum SprintStatus {
+  PLANNED
+  ACTIVE
+  COMPLETED
+}
+
 model Project {
   id            String        @id @default(uuid())
   name          String
@@ -33,6 +54,54 @@ model Project {
   status        ProjectStatus @default(ACTIVE)
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
+  
+  tasks         Task[]
+  sprints       Sprint[]
 
   @@map("projects")
+}
+
+model Task {
+  id              String       @id @default(uuid())
+  projectId       String
+  sprintId        String?
+  parentTaskId    String?
+  title           String
+  description     String?
+  priority        TaskPriority @default(MEDIUM)
+  status          TaskStatus   @default(BACKLOG)
+  assignedAgentId String?
+  storyPoint      Int?
+  artifactPath    String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  
+  project         Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sprint          Sprint?      @relation(fields: [sprintId], references: [id], onDelete: SetNull)
+  parentTask      Task?        @relation("TaskHierarchy", fields: [parentTaskId], references: [id], onDelete: SetNull)
+  childTasks      Task[]       @relation("TaskHierarchy")
+  
+  @@index([projectId])
+  @@index([sprintId])
+  @@index([status])
+  @@map("tasks")
+}
+
+model Sprint {
+  id          String        @id @default(uuid())
+  projectId   String
+  name        String
+  goal        String?
+  status      SprintStatus  @default(PLANNED)
+  startDate   DateTime?
+  endDate     DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  
+  project     Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tasks       Task[]
+  
+  @@index([projectId])
+  @@index([status])
+  @@map("sprints")
 }
