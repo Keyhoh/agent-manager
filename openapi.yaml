@@ -8,10 +8,10 @@ servers:
     description: Development server
 
 tags:
-  - name: Projects
-    description: プロジェクト管理
-  - name: Tasks
-    description: タスク管理
+  - name: Products
+    description: プロダクト管理
+  - name: BacklogItems
+    description: バックログアイテム管理
   - name: Sprints
     description: スプリント管理
   - name: Agents
@@ -20,64 +20,64 @@ tags:
     description: スプリントレビュー管理
 
 paths:
-  /projects:
+  /products:
     get:
       tags:
-        - Projects
-      summary: プロジェクト一覧取得
+        - Products
+      summary: プロダクト一覧取得
       responses:
         '200':
-          description: プロジェクト一覧
+          description: プロダクト一覧
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Project'
+                  $ref: '#/components/schemas/Product'
     post:
       tags:
-        - Projects
-      summary: プロジェクト作成
+        - Products
+      summary: プロダクト作成
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateProjectRequest'
+              $ref: '#/components/schemas/CreateProductRequest'
       responses:
         '201':
-          description: プロジェクト作成成功
+          description: プロダクト作成成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Project'
+                $ref: '#/components/schemas/Product'
 
-  /projects/{projectId}:
+  /products/{productId}:
     get:
       tags:
-        - Projects
-      summary: プロジェクト詳細取得
+        - Products
+      summary: プロダクト詳細取得
       parameters:
-        - name: projectId
+        - name: productId
           in: path
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: プロジェクト詳細
+          description: プロダクト詳細
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Project'
+                $ref: '#/components/schemas/Product'
         '404':
-          description: プロジェクトが見つかりません
+          description: プロダクトが見つかりません
     put:
       tags:
-        - Projects
-      summary: プロジェクト更新
+        - Products
+      summary: プロダクト更新
       parameters:
-        - name: projectId
+        - name: productId
           in: path
           required: true
           schema:
@@ -87,94 +87,94 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateProjectRequest'
+              $ref: '#/components/schemas/UpdateProductRequest'
       responses:
         '200':
-          description: プロジェクト更新成功
+          description: プロダクト更新成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Project'
+                $ref: '#/components/schemas/Product'
     delete:
       tags:
-        - Projects
-      summary: プロジェクト削除
+        - Products
+      summary: プロダクト削除
       parameters:
-        - name: projectId
+        - name: productId
           in: path
           required: true
           schema:
             type: string
       responses:
         '204':
-          description: プロジェクト削除成功
+          description: プロダクト削除成功
 
-  /projects/{projectId}/backlog:
+  /products/{productId}/backlog:
     get:
       tags:
-        - Tasks
+        - BacklogItems
       summary: プロダクトバックログ取得
       parameters:
-        - name: projectId
+        - name: productId
           in: path
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: バックログタスク一覧
+          description: バックログアイテム一覧
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Task'
+                  $ref: '#/components/schemas/BacklogItem'
 
-  /tasks:
+  /backlog-items:
     post:
       tags:
-        - Tasks
-      summary: タスク作成
+        - BacklogItems
+      summary: バックログアイテム作成
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateTaskRequest'
+              $ref: '#/components/schemas/CreateBacklogItemRequest'
       responses:
         '201':
-          description: タスク作成成功
+          description: バックログアイテム作成成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Task'
+                $ref: '#/components/schemas/BacklogItem'
 
-  /tasks/{taskId}:
+  /backlog-items/{backlogItemId}:
     get:
       tags:
-        - Tasks
-      summary: タスク詳細取得
+        - BacklogItems
+      summary: バックログアイテム詳細取得
       parameters:
-        - name: taskId
+        - name: backlogItemId
           in: path
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: タスク詳細
+          description: バックログアイテム詳細
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Task'
+                $ref: '#/components/schemas/BacklogItem'
         '404':
-          description: タスクが見つかりません
+          description: バックログアイテムが見つかりません
     put:
       tags:
-        - Tasks
-      summary: タスク更新
+        - BacklogItems
+      summary: バックログアイテム更新
       parameters:
-        - name: taskId
+        - name: backlogItemId
           in: path
           required: true
           schema:
@@ -184,69 +184,69 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateTaskRequest'
+              $ref: '#/components/schemas/UpdateBacklogItemRequest'
       responses:
         '200':
-          description: タスク更新成功
+          description: バックログアイテム更新成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Task'
+                $ref: '#/components/schemas/BacklogItem'
     delete:
       tags:
-        - Tasks
-      summary: タスク削除
+        - BacklogItems
+      summary: バックログアイテム削除
       parameters:
-        - name: taskId
+        - name: backlogItemId
           in: path
           required: true
           schema:
             type: string
       responses:
         '204':
-          description: タスク削除成功
+          description: バックログアイテム削除成功
 
-  /tasks/{taskId}/split:
+  /backlog-items/{backlogItemId}/split:
     post:
       tags:
-        - Tasks
-      summary: タスク分割（AI実行）
-      description: 複雑なタスクをAIが自動的に小さなタスクに分割
+        - BacklogItems
+      summary: バックログアイテム分割（AI実行）
+      description: 複雑なバックログアイテムをAIが自動的に小さなアイテムに分割
       parameters:
-        - name: taskId
+        - name: backlogItemId
           in: path
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: タスク分割成功
+          description: バックログアイテム分割成功
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Task'
+                  $ref: '#/components/schemas/BacklogItem'
 
-  /tasks/{taskId}/execute:
+  /backlog-items/{backlogItemId}/execute:
     post:
       tags:
-        - Tasks
-      summary: タスク実行（AI実行）
-      description: AIがタスクを自律的に実行
+        - BacklogItems
+      summary: バックログアイテム実行（AI実行）
+      description: AIがバックログアイテムを自律的に実行
       parameters:
-        - name: taskId
+        - name: backlogItemId
           in: path
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: タスク実行成功
+          description: バックログアイテム実行成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TaskExecutionResult'
+                $ref: '#/components/schemas/BacklogItemExecutionResult'
 
   /sprints:
     get:
@@ -254,7 +254,7 @@ paths:
         - Sprints
       summary: スプリント一覧取得
       parameters:
-        - name: projectId
+        - name: productId
           in: query
           required: true
           schema:
@@ -350,7 +350,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Sprint'
 
-  /sprints/{sprintId}/tasks:
+  /sprints/{sprintId}/backlog-items:
     get:
       tags:
         - Sprints
@@ -369,7 +369,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Task'
+                  $ref: '#/components/schemas/BacklogItem'
 
   /sprints/{sprintId}/burndown:
     get:
@@ -487,7 +487,7 @@ paths:
 
 components:
   schemas:
-    Project:
+    Product:
       type: object
       properties:
         id:
@@ -513,7 +513,7 @@ components:
           type: string
           format: date-time
 
-    CreateProjectRequest:
+    CreateProductRequest:
       type: object
       required:
         - name
@@ -527,7 +527,7 @@ components:
           type: string
           format: uri
 
-    UpdateProjectRequest:
+    UpdateProductRequest:
       type: object
       properties:
         name:
@@ -540,24 +540,24 @@ components:
             - ACTIVE
             - ARCHIVED
 
-    Task:
+    BacklogItem:
       type: object
       properties:
         id:
           type: string
           format: uuid
-        projectId:
+        productId:
           type: string
           format: uuid
         sprintId:
           type: string
           format: uuid
           nullable: true
-        parentTaskId:
+        parentBacklogItemId:
           type: string
           format: uuid
           nullable: true
-          description: 親タスクID（タスク分割時）
+          description: 親バックログアイテムID（分割時）
         title:
           type: string
         description:
@@ -596,17 +596,17 @@ components:
           type: string
           format: date-time
 
-    CreateTaskRequest:
+    CreateBacklogItemRequest:
       type: object
       required:
-        - projectId
+        - productId
         - title
         - description
       properties:
-        projectId:
+        productId:
           type: string
           format: uuid
-        parentTaskId:
+        parentBacklogItemId:
           type: string
           format: uuid
         title:
@@ -624,7 +624,7 @@ components:
         storyPoint:
           type: integer
 
-    UpdateTaskRequest:
+    UpdateBacklogItemRequest:
       type: object
       properties:
         title:
@@ -657,10 +657,10 @@ components:
         artifactPath:
           type: string
 
-    TaskExecutionResult:
+    BacklogItemExecutionResult:
       type: object
       properties:
-        taskId:
+        backlogItemId:
           type: string
           format: uuid
         status:
@@ -688,7 +688,7 @@ components:
         id:
           type: string
           format: uuid
-        projectId:
+        productId:
           type: string
           format: uuid
         name:
@@ -720,11 +720,11 @@ components:
     CreateSprintRequest:
       type: object
       required:
-        - projectId
+        - productId
         - name
         - goal
       properties:
-        projectId:
+        productId:
           type: string
           format: uuid
         name:
