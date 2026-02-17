@@ -1,28 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import {
-  useGetProjectsQuery,
-  useDeleteProjectsByProjectIdMutation,
-} from '@/services/api';
+import { useGetProjectsQuery } from '@/services/api';
 import { ProjectCard } from '@/components/features/projects/ProjectCard';
-import type { Project } from '@/services/api';
 
 export function ProjectsListPage() {
   const { data: projects, isLoading, error } = useGetProjectsQuery();
-  const [deleteProject] = useDeleteProjectsByProjectIdMutation();
-
-  const handleDelete = async (project: Project) => {
-    if (!project.id || !window.confirm(`「${project.name}」を削除してもよろしいですか？`)) {
-      return;
-    }
-    try {
-      await deleteProject({ projectId: project.id }).unwrap();
-    } catch (err) {
-      console.error('Failed to delete project:', err);
-      alert('プロジェクトの削除に失敗しました');
-    }
-  };
 
   if (error) {
     return (
@@ -63,7 +46,6 @@ export function ProjectsListPage() {
               <ProjectCard
                 key={project.id}
                 project={project}
-                onDelete={handleDelete}
               />
             ))}
           </div>

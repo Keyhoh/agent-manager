@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "7.10.0",
+    "generators": {
+      "typescript-redux-query": {
+        "generatorName": "typescript-redux-query",
+        "output": "src/libs/api-client",
+        "inputSpec": "../openapi.yaml",
+        "additionalProperties": {
+          "supportsES6": "true",
+          "npmName": "@agent-manager/api-client",
+          "withInterfaces": "true"
+        }
+      }
+    }
+  }
+}
