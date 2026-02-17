@@ -40,7 +40,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
                 aria-label={`リポジトリ ${project.repositoryUrl} を新しいタブで開く`}
-                className="text-sm text-blue-600 hover:text-blue-800 hover:underline truncate block cursor-pointer"
+                className="text-sm text-blue-600 hover:text-blue-800 hover:underline truncate inline-block max-w-full cursor-pointer"
               >
                 {project.repositoryUrl}
               </a>
