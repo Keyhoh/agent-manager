@@ -106,6 +106,12 @@ export function ProjectDetailPage() {
                 >
                   バックログ
                 </Link>
+                <Link
+                  href={`/projects/${projectId}/sprints`}
+                  variant="secondary"
+                >
+                  スプリント
+                </Link>
                 <Button
                   onClick={() => setIsEditing(true)}
                   variant="primary"
