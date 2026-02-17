@@ -1,6 +1,6 @@
 'use client';
 
-import type { Project } from '@/libs/api-client/src';
+import type { Project } from '@/services/api';
 
 interface ProjectCardProps {
   project: Project;

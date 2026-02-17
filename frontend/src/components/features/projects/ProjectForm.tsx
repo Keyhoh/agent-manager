@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { Project, CreateProjectRequest, UpdateProjectRequest } from '@/libs/api-client/src';
+import type { Project, CreateProjectRequest, UpdateProjectRequest } from '@/services/api';
 
 interface ProjectFormProps {
   project?: Project;

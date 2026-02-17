@@ -3,19 +3,19 @@
 import { useState } from 'react';
 import {
   useGetProjectsQuery,
-  useCreateProjectMutation,
-  useUpdateProjectMutation,
-  useDeleteProjectMutation,
-} from '@/services/projects';
+  usePostProjectsMutation,
+  usePutProjectsByProjectIdMutation,
+  useDeleteProjectsByProjectIdMutation,
+} from '@/services/api';
 import { ProjectCard } from '@/components/features/projects/ProjectCard';
 import { ProjectForm } from '@/components/features/projects/ProjectForm';
-import type { Project, CreateProjectRequest, UpdateProjectRequest } from '@/libs/api-client/src';
+import type { Project, CreateProjectRequest, UpdateProjectRequest } from '@/services/api';
 
 export default function ProjectsPage() {
   const { data: projects, isLoading, error } = useGetProjectsQuery();
-  const [createProject, { isLoading: isCreating }] = useCreateProjectMutation();
-  const [updateProject, { isLoading: isUpdating }] = useUpdateProjectMutation();
-  const [deleteProject] = useDeleteProjectMutation();
+  const [createProject, { isLoading: isCreating }] = usePostProjectsMutation();
+  const [updateProject, { isLoading: isUpdating }] = usePutProjectsByProjectIdMutation();
+  const [deleteProject] = useDeleteProjectsByProjectIdMutation();
 
   const [showForm, setShowForm] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
@@ -23,7 +23,7 @@ export default function ProjectsPage() {
 
   const handleCreate = async (data: CreateProjectRequest) => {
     try {
-      await createProject(data).unwrap();
+      await createProject({ createProjectRequest: data }).unwrap();
       setShowForm(false);
     } catch (err) {
       console.error('Failed to create project:', err);
@@ -33,7 +33,7 @@ export default function ProjectsPage() {
   const handleUpdate = async (data: UpdateProjectRequest) => {
     if (!editingProject || !editingProject.id) return;
     try {
-      await updateProject({ id: editingProject.id, project: data }).unwrap();
+      await updateProject({ projectId: editingProject.id, updateProjectRequest: data }).unwrap();
       setEditingProject(null);
     } catch (err) {
       console.error('Failed to update project:', err);
@@ -45,7 +45,7 @@ export default function ProjectsPage() {
       return;
     }
     try {
-      await deleteProject(project.id).unwrap();
+      await deleteProject({ projectId: project.id }).unwrap();
       setDeletingProject(null);
     } catch (err) {
       console.error('Failed to delete project:', err);
