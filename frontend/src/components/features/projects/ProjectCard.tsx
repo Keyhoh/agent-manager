@@ -1,14 +1,14 @@
 'use client';
 
+import Link from 'next/link';
 import type { Project } from '@/services/api';
 
 interface ProjectCardProps {
   project: Project;
-  onEdit: (project: Project) => void;
   onDelete: (project: Project) => void;
 }
 
-export function ProjectCard({ project, onEdit, onDelete }: ProjectCardProps) {
+export function ProjectCard({ project, onDelete }: ProjectCardProps) {
   const statusColor = project.status === 'ACTIVE' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800';
   const statusText = project.status === 'ACTIVE' ? 'アクティブ' : 'アーカイブ';
 
@@ -44,12 +44,12 @@ export function ProjectCard({ project, onEdit, onDelete }: ProjectCardProps) {
       </div>
 
       <div className="flex gap-2">
-        <button
-          onClick={() => onEdit(project)}
-          className="flex-1 px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        <Link
+          href={`/projects/${project.id}/edit`}
+          className="flex-1 px-3 py-2 text-sm font-medium text-center text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
           編集
-        </button>
+        </Link>
         <button
           onClick={() => onDelete(project)}
           className="flex-1 px-3 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-md hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
