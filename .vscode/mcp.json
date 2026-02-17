@@ -1,14 +1,9 @@
 {
     "servers": {
         "git": {
-            "command": "docker",
+            "command": "uvx",
             "args": [
-                "run",
-                "--rm",
-                "-i",
-                "--mount",
-                "type=bind,src=${workspaceFolder},dst=/workspace",
-                "mcp/git"
+                "mcp-server-git"
             ]
         },
         "github": {

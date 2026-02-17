@@ -1,0 +1,144 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  NODE_VERSION: '24'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies (backend)
+        run: npm install --cwd backend
+
+      - name: Install dependencies (frontend)
+        run: npm install --cwd frontend
+
+      - name: Lint backend
+        run: npm --cwd backend run lint
+
+      - name: Lint frontend
+        run: npm --cwd frontend run lint
+
+  type-check:
+    runs-on: ubuntu-latest
+    name: Type Check
+  type-check:
+    runs-on: ubuntu-latest
+    name: Type Check
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies (backend)
+        run: npm install --cwd backend
+
+      - name: Install dependencies (frontend)
+        run: npm install --cwd frontend
+
+      - name: Type check backend
+        run: npx tsc --noEmit
+        working-directory: backend
+
+      - name: Type check frontend
+        run: npm --cwd frontend run type-check
+    name: Build
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    needs: [lint, type-check]
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies (backend)
+        run: npm install --cwd backend
+
+      - name: Build backend
+        run: npm --cwd backend run build
+
+      - name: Install dependencies (frontend)
+        run: npm install --cwd frontend
+
+      - name: Build frontend
+        run: npm --cwd frontend run build
+
+      - name: Upload backend artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-dist
+          path: backend/dist
+
+      - name: Upload frontend artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-out
+          path: frontend/.next
+    name: Test
+    needs: [lint, type-check]
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: agent_manager_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies (backend)
+        run: npm install --cwd backend
+
+      - name: Run backend tests
+        env:
+          DATABASE_URL: postgresql://test:test@localhost:5432/agent_manager_test
+        run: npm --cwd backend run test
+
+      - name: Install dependencies (frontend)
+        run: npm install --cwd frontend
+
+      - name: Run frontend tests
+        run: npm --cwd frontend run test
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4.6.0
+        with:
+          files: ./backend/coverage/coverage-final.json,./frontend/coverage/coverage-final.json

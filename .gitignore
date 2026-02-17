@@ -1,0 +1,12 @@
+.env.local
+.env.*.local
+node_modules/
+dist/
+coverage/
+.DS_Store
+*.log
+.next
+.vscode/settings.json
+.idea
+.terraform
+.terragrunt-cache
