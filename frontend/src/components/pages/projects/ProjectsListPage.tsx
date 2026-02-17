@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { useGetProjectsQuery } from '@/services/api';
 import { ProjectCard } from '@/components/features/projects/ProjectCard';
+import { Link, Spinner } from '@/components/core';
 
 export function ProjectsListPage() {
   const { data: projects, isLoading, error } = useGetProjectsQuery();
@@ -27,7 +27,7 @@ export function ProjectsListPage() {
             <h1 className="text-3xl font-bold text-gray-900">プロジェクト管理</h1>
             <Link
               href="/projects/new"
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              variant="secondary"
               aria-label="新しいプロジェクトを作成"
             >
               新規プロジェクト
@@ -38,10 +38,7 @@ export function ProjectsListPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {isLoading ? (
-          <div className="flex justify-center items-center py-12" role="status" aria-live="polite">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" aria-hidden="true"></div>
-            <span className="sr-only">読み込み中...</span>
-          </div>
+          <Spinner size="lg" className="py-12" />
         ) : projects && projects.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project) => (
@@ -56,7 +53,8 @@ export function ProjectsListPage() {
             <p className="text-gray-500 text-lg">プロジェクトがありません</p>
             <Link
               href="/projects/new"
-              className="mt-4 inline-block px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-800"
+              variant="ghost"
+              className="mt-4 inline-block px-4 py-2"
             >
               最初のプロジェクトを作成
             </Link>

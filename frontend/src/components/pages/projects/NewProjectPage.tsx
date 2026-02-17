@@ -1,9 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { usePostProjectsMutation } from '@/services/api';
 import { CreateProjectForm } from '@/components/features/projects/CreateProjectForm';
+import { Link } from '@/components/core';
 import type { CreateProjectRequest } from '@/services/api';
 
 export function NewProjectPage() {
@@ -30,7 +30,8 @@ export function NewProjectPage() {
         <nav className="mb-6" aria-label="パンくずリスト">
           <Link
             href="/projects"
-            className="text-blue-600 hover:text-blue-800 text-sm"
+            variant="primary"
+            className="text-sm"
           >
             ← プロジェクト一覧に戻る
           </Link>

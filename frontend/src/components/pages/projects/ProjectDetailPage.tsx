@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import Link from 'next/link';
 import {
   useGetProjectsByProjectIdQuery,
   usePutProjectsByProjectIdMutation,
   useDeleteProjectsByProjectIdMutation,
 } from '@/services/api';
 import { UpdateProjectForm } from '@/components/features/projects/UpdateProjectForm';
+import { Link, Button, Spinner } from '@/components/core';
 import type { UpdateProjectRequest } from '@/services/api';
 
 export function ProjectDetailPage() {
@@ -49,10 +49,7 @@ export function ProjectDetailPage() {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-4xl mx-auto px-4">
-          <div className="flex justify-center items-center py-12" role="status" aria-live="polite">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" aria-hidden="true"></div>
-            <span className="sr-only">読み込み中...</span>
-          </div>
+          <Spinner size="lg" className="py-12" />
         </div>
       </div>
     );
@@ -66,7 +63,7 @@ export function ProjectDetailPage() {
             <p className="text-red-600 text-lg mb-4">プロジェクトが見つかりません</p>
             <Link
               href="/projects"
-              className="text-blue-600 hover:text-blue-800"
+              variant="primary"
             >
               プロジェクト一覧に戻る
             </Link>
@@ -86,7 +83,7 @@ export function ProjectDetailPage() {
         <nav className="mb-6" aria-label="パンくずリスト">
           <Link
             href="/projects"
-            className="text-blue-600 hover:text-blue-800"
+            variant="primary"
           >
             ← プロジェクト一覧に戻る
           </Link>
@@ -103,20 +100,20 @@ export function ProjectDetailPage() {
             </div>
             {!isEditing && (
               <div className="flex gap-2" role="group" aria-label="プロジェクト操作">
-                <button
+                <Button
                   onClick={() => setIsEditing(true)}
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
+                  variant="primary"
                   aria-label="プロジェクトを編集"
                 >
                   編集
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={handleDelete}
-                  className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer"
+                  variant="danger"
                   aria-label="プロジェクトを削除"
                 >
                   削除
-                </button>
+                </Button>
               </div>
             )}
           </div>
