@@ -1,9 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { usePostTasksMutation } from '@/services/api';
+import { usePostTasksMutation } from '@/libs/api';
 import { TaskForm } from '@/components/features/tasks';
-import type { CreateTaskRequest, UpdateTaskRequest } from '@/services/api';
+import type { CreateTaskRequest, UpdateTaskRequest } from '@/libs/api';
 import { use } from 'react';
 
 export default function NewTaskPage(props: { params: Promise<{ id: string }> }) {
@@ -26,7 +26,7 @@ export default function NewTaskPage(props: { params: Promise<{ id: string }> }) 
 
   return (
     <main className="container mx-auto px-4 py-8 max-w-2xl">
-      <h1 className="text-3xl font-bold mb-8">新規タスク作成</h1>
+      <h1 className="text-3xl font-bold mb-8">新規バックログアイテム作成</h1>
       <TaskForm
         projectId={params.id}
         onSubmit={handleSubmit}

@@ -6,10 +6,10 @@ import {
   useGetProjectsByProjectIdQuery,
   usePutProjectsByProjectIdMutation,
   useDeleteProjectsByProjectIdMutation,
-} from '@/services/api';
+} from '@/libs/api';
 import { UpdateProjectForm } from '@/components/features/projects/UpdateProjectForm';
 import { Link, Button, Spinner } from '@/components/core';
-import type { UpdateProjectRequest } from '@/services/api';
+import type { UpdateProjectRequest } from '@/libs/api';
 
 export function ProjectDetailPage() {
   const router = useRouter();
@@ -28,7 +28,7 @@ export function ProjectDetailPage() {
       setIsEditing(false);
     } catch (err) {
       console.error('Failed to update project:', err);
-      alert('プロジェクトの更新に失敗しました');
+      alert('プロダクトの更新に失敗しました');
     }
   };
 
@@ -41,7 +41,7 @@ export function ProjectDetailPage() {
       router.push('/projects');
     } catch (err) {
       console.error('Failed to delete project:', err);
-      alert('プロジェクトの削除に失敗しました');
+      alert('プロダクトの削除に失敗しました');
     }
   };
 
@@ -60,12 +60,12 @@ export function ProjectDetailPage() {
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center" role="alert">
-            <p className="text-red-600 text-lg mb-4">プロジェクトが見つかりません</p>
+            <p className="text-red-600 text-lg mb-4">プロダクトが見つかりません</p>
             <Link
               href="/projects"
               variant="primary"
             >
-              プロジェクト一覧に戻る
+              プロダクト一覧に戻る
             </Link>
           </div>
         </div>
@@ -85,7 +85,7 @@ export function ProjectDetailPage() {
             href="/projects"
             variant="primary"
           >
-            ← プロジェクト一覧に戻る
+            ← プロダクト一覧に戻る
           </Link>
         </nav>
 
@@ -99,7 +99,7 @@ export function ProjectDetailPage() {
               </span>
             </div>
             {!isEditing && (
-              <div className="flex gap-2" role="group" aria-label="プロジェクト操作">
+              <div className="flex gap-2" role="group" aria-label="プロダクト操作">
                 <Link
                   href={`/projects/${projectId}/backlog`}
                   variant="secondary"
@@ -115,14 +115,14 @@ export function ProjectDetailPage() {
                 <Button
                   onClick={() => setIsEditing(true)}
                   variant="primary"
-                  aria-label="プロジェクトを編集"
+                  aria-label="プロダクトを編集"
                 >
                   編集
                 </Button>
                 <Button
                   onClick={handleDelete}
                   variant="danger"
-                  aria-label="プロジェクトを削除"
+                  aria-label="プロダクトを削除"
                 >
                   削除
                 </Button>
@@ -135,7 +135,7 @@ export function ProjectDetailPage() {
         <main>
           {isEditing ? (
             <section className="bg-white rounded-lg shadow p-6 mb-6" aria-labelledby="edit-heading">
-              <h2 id="edit-heading" className="text-xl font-semibold text-gray-900 mb-4">プロジェクト編集</h2>
+              <h2 id="edit-heading" className="text-xl font-semibold text-gray-900 mb-4">プロダクト編集</h2>
               <UpdateProjectForm
                 project={project}
                 onSubmit={handleUpdate}
@@ -144,7 +144,7 @@ export function ProjectDetailPage() {
               />
             </section>
           ) : (
-            /* プロジェクト詳細 */
+            /* プロダクト詳細 */
             <article className="bg-white rounded-lg shadow">
               <div className="p-6 space-y-6">
                 {/* 説明 */}
@@ -178,7 +178,7 @@ export function ProjectDetailPage() {
                   <h2 className="text-sm font-medium text-gray-500 mb-3">詳細情報</h2>
                   <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
-                      <dt className="text-xs font-medium text-gray-500">プロジェクトID</dt>
+                      <dt className="text-xs font-medium text-gray-500">プロダクトID</dt>
                       <dd className="mt-1 text-sm text-gray-900 font-mono">{project.id}</dd>
                     </div>
                     <div>

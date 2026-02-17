@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetProjectsQuery } from '@/services/api';
+import { useGetProjectsQuery } from '@/libs/api';
 import { ProjectCard } from '@/components/features/projects/ProjectCard';
 import { Link, Spinner } from '@/components/core';
 
@@ -12,7 +12,7 @@ export function ProjectsListPage() {
       <div className="min-h-screen bg-gray-50 p-8">
         <div className="max-w-7xl mx-auto">
           <div className="bg-red-50 border border-red-200 rounded-lg p-4" role="alert">
-            <p className="text-red-800">プロジェクトの読み込みに失敗しました</p>
+            <p className="text-red-800">プロダクトの読み込みに失敗しました</p>
           </div>
         </div>
       </div>
@@ -24,13 +24,13 @@ export function ProjectsListPage() {
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold text-gray-900">プロジェクト管理</h1>
+            <h1 className="text-3xl font-bold text-gray-900">プロダクト管理</h1>
             <Link
               href="/projects/new"
-              variant="secondary"
-              aria-label="新しいプロジェクトを作成"
+              variant="primary"
+              aria-label="新しいプロダクトを作成"
             >
-              新規プロジェクト
+              新規プロダクト
             </Link>
           </div>
         </div>
@@ -50,13 +50,13 @@ export function ProjectsListPage() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">プロジェクトがありません</p>
+            <p className="text-gray-500 text-lg">プロダクトがありません</p>
             <Link
               href="/projects/new"
               variant="ghost"
               className="mt-4 inline-block px-4 py-2"
             >
-              最初のプロジェクトを作成
+              最初のプロダクトを作成
             </Link>
           </div>
         )}

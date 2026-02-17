@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { CreateProjectRequest } from '@/services/api';
+import type { CreateProjectRequest } from '@/libs/api';
 import { Button, Input, TextArea, Label } from '@/components/core';
 
 interface CreateProjectFormProps {
@@ -21,10 +21,10 @@ export function CreateProjectForm({ onSubmit, onCancel, isLoading }: CreateProje
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4" aria-label="プロジェクト作成フォーム">
+    <form onSubmit={handleSubmit} className="space-y-4" aria-label="プロダクト作成フォーム">
       <div>
         <Label htmlFor="name" required>
-          プロジェクト名
+          プロダクト名
         </Label>
         <Input
           id="name"
@@ -32,7 +32,7 @@ export function CreateProjectForm({ onSubmit, onCancel, isLoading }: CreateProje
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="プロジェクト名を入力"
+          placeholder="プロダクト名を入力"
           autoComplete="off"
           required
           aria-required="true"
@@ -51,7 +51,7 @@ export function CreateProjectForm({ onSubmit, onCancel, isLoading }: CreateProje
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
-          placeholder="プロジェクトの説明を入力"
+          placeholder="プロダクトの説明を入力"
           required
           aria-required="true"
           disabled={isLoading}

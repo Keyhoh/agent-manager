@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetProjectsByProjectIdBacklogQuery } from '@/services/api';
+import { useGetProjectsByProjectIdBacklogQuery } from '@/libs/api';
 import { TaskCard } from '@/components/features/tasks';
 import { Button, Link, Spinner } from '@/components/core';
 import { use } from 'react';
@@ -31,19 +31,19 @@ export default function BacklogPage(props: { params: Promise<{ id: string }> }) 
         <h1 className="text-3xl font-bold">バックログ</h1>
         <div className="flex gap-4">
           <Link href={`/projects/${params.id}`} variant="secondary">
-            プロジェクトに戻る
+            プロダクトに戻る
           </Link>
           <Link href={`/projects/${params.id}/backlog/tasks/new`} variant="primary">
-            新規タスク作成
+            新規バックログアイテム作成
           </Link>
         </div>
       </div>
 
       {tasks && tasks.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-500 mb-4">タスクがまだありません</p>
+          <p className="text-gray-500 mb-4">バックログアイテムがまだありません</p>
           <Link href={`/projects/${params.id}/backlog/tasks/new`} variant="primary">
-            最初のタスクを作成
+            最初のバックログアイテムを作成
           </Link>
         </div>
       ) : (

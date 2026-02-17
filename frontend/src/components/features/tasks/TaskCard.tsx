@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Task } from '@/services/api';
+import { Task } from '@/libs/api';
 
 interface TaskCardProps {
   task: Task;

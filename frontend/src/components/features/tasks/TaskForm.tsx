@@ -6,7 +6,7 @@ import { Input } from '@/components/core';
 import { TextArea } from '@/components/core';
 import { Label } from '@/components/core';
 import { Select } from '@/components/core';
-import type { CreateTaskRequest, UpdateTaskRequest } from '@/services/api';
+import type { CreateTaskRequest, UpdateTaskRequest } from '@/libs/api';
 
 interface TaskFormProps {
   projectId: string;

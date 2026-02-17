@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "openapi:generate": "npx @rtk-query/codegen-openapi openapi-config.ts"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",

@@ -1,9 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { usePostSprintsMutation } from '@/services/api';
+import { usePostSprintsMutation } from '@/libs/api';
 import { SprintForm } from '@/components/features/sprints';
-import type { CreateSprintRequest, UpdateSprintRequest } from '@/services/api';
+import type { CreateSprintRequest, UpdateSprintRequest } from '@/libs/api';
 import { use } from 'react';
 
 export default function NewSprintPage(props: { params: Promise<{ id: string }> }) {

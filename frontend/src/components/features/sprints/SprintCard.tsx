@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Sprint } from '@/services/api';
+import { Sprint } from '@/libs/api';
 
 interface SprintCardProps {
   sprint: Sprint;

@@ -6,11 +6,11 @@ import {
   useGetSprintsBySprintIdQuery,
   usePutSprintsBySprintIdMutation,
   useGetSprintsBySprintIdTasksQuery,
-} from '@/services/api';
+} from '@/libs/api';
 import { SprintForm } from '@/components/features/sprints';
 import { TaskCard } from '@/components/features/tasks';
 import { Button, Link, Spinner } from '@/components/core';
-import type { UpdateSprintRequest } from '@/services/api';
+import type { UpdateSprintRequest } from '@/libs/api';
 
 export default function SprintDetailPage(props: {
   params: Promise<{ id: string; sprintId: string }>;

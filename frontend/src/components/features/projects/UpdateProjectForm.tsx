@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { Project, UpdateProjectRequest } from '@/services/api';
+import type { Project, UpdateProjectRequest } from '@/libs/api';
 import { Button, Input, TextArea, Select, Label } from '@/components/core';
 
 interface UpdateProjectFormProps {
@@ -22,10 +22,10 @@ export function UpdateProjectForm({ project, onSubmit, onCancel, isLoading }: Up
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4" aria-label="プロジェクト編集フォーム">
+    <form onSubmit={handleSubmit} className="space-y-4" aria-label="プロダクト編集フォーム">
       <div>
         <Label htmlFor="name" required>
-          プロジェクト名
+          プロダクト名
         </Label>
         <Input
           id="name"
@@ -33,7 +33,7 @@ export function UpdateProjectForm({ project, onSubmit, onCancel, isLoading }: Up
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="プロジェクト名を入力"
+          placeholder="プロダクト名を入力"
           autoComplete="off"
           required
           aria-required="true"
@@ -52,7 +52,7 @@ export function UpdateProjectForm({ project, onSubmit, onCancel, isLoading }: Up
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
-          placeholder="プロジェクトの説明を入力"
+          placeholder="プロダクトの説明を入力"
           required
           aria-required="true"
           disabled={isLoading}

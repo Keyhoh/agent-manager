@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetSprintsQuery } from '@/services/api';
+import { useGetSprintsQuery } from '@/libs/api';
 import { SprintCard } from '@/components/features/sprints';
 import { Link, Spinner } from '@/components/core';
 import { use } from 'react';

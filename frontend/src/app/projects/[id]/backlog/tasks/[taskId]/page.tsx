@@ -6,10 +6,10 @@ import {
   useGetTasksByTaskIdQuery,
   usePutTasksByTaskIdMutation,
   useDeleteTasksByTaskIdMutation,
-} from '@/services/api';
+} from '@/libs/api';
 import { TaskForm } from '@/components/features/tasks';
 import { Button, Spinner } from '@/components/core';
-import type { UpdateTaskRequest } from '@/services/api';
+import type { UpdateTaskRequest } from '@/libs/api';
 
 export default function TaskDetailPage(props: {
   params: Promise<{ id: string; taskId: string }>;
@@ -33,7 +33,7 @@ export default function TaskDetailPage(props: {
   };
 
   const handleDelete = async () => {
-    if (!confirm('このタスクを削除してもよろしいですか?')) {
+    if (!confirm('このバックログアイテムを削除してもよろしいですか?')) {
       return;
     }
 
@@ -60,7 +60,7 @@ export default function TaskDetailPage(props: {
   if (error || !task) {
     return (
       <main className="container mx-auto px-4 py-8">
-        <p className="text-red-600">タスクが見つかりませんでした。</p>
+        <p className="text-red-600">バックログアイテムが見つかりませんでした。</p>
       </main>
     );
   }
@@ -68,7 +68,7 @@ export default function TaskDetailPage(props: {
   return (
     <main className="container mx-auto px-4 py-8 max-w-2xl">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">タスク編集</h1>
+        <h1 className="text-3xl font-bold">バックログアイテム編集</h1>
         <Button
           onClick={handleDelete}
           variant="danger"

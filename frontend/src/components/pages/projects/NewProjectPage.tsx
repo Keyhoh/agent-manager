@@ -1,10 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { usePostProjectsMutation } from '@/services/api';
+import { usePostProjectsMutation } from '@/libs/api';
 import { CreateProjectForm } from '@/components/features/projects/CreateProjectForm';
 import { Link } from '@/components/core';
-import type { CreateProjectRequest } from '@/services/api';
+import type { CreateProjectRequest } from '@/libs/api';
 
 export function NewProjectPage() {
   const router = useRouter();
@@ -16,7 +16,7 @@ export function NewProjectPage() {
       router.push('/projects');
     } catch (err) {
       console.error('Failed to create project:', err);
-      alert('プロジェクトの作成に失敗しました');
+      alert('プロダクトの作成に失敗しました');
     }
   };
 
@@ -33,20 +33,20 @@ export function NewProjectPage() {
             variant="primary"
             className="text-sm"
           >
-            ← プロジェクト一覧に戻る
+            ← プロダクト一覧に戻る
           </Link>
         </nav>
 
         <header className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900">新規プロジェクト作成</h1>
+          <h1 className="text-3xl font-bold text-gray-900">新規プロダクト作成</h1>
           <p className="mt-2 text-gray-600">
-            新しいプロジェクトを作成します。必須項目を入力してください。
+            新しいプロダクトを作成します。必須項目を入力してください。
           </p>
         </header>
 
         <main>
           <section className="bg-white rounded-lg shadow p-6" aria-labelledby="form-heading">
-            <h2 id="form-heading" className="sr-only">プロジェクト作成フォーム</h2>
+            <h2 id="form-heading" className="sr-only">プロダクト作成フォーム</h2>
             <CreateProjectForm
               onSubmit={handleSubmit}
               onCancel={handleCancel}

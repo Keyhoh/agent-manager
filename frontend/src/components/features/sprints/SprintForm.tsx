@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from 'react';
 import { Button, Input, TextArea, Label, Select } from '@/components/core';
-import type { CreateSprintRequest, UpdateSprintRequest } from '@/services/api';
+import type { CreateSprintRequest, UpdateSprintRequest } from '@/libs/api';
 
 interface SprintFormProps {
   projectId: string;

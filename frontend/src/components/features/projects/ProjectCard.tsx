@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import type { Project } from '@/services/api';
+import type { Project } from '@/libs/api';
 
 interface ProjectCardProps {
   project: Project;
