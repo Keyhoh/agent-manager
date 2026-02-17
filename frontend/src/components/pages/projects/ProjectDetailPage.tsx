@@ -8,7 +8,7 @@ import {
   usePutProjectsByProjectIdMutation,
   useDeleteProjectsByProjectIdMutation,
 } from '@/services/api';
-import { ProjectForm } from '@/components/features/projects/ProjectForm';
+import { UpdateProjectForm } from '@/components/features/projects/UpdateProjectForm';
 import type { UpdateProjectRequest } from '@/services/api';
 
 export function ProjectDetailPage() {
@@ -119,7 +119,7 @@ export function ProjectDetailPage() {
         {isEditing ? (
           <div className="bg-white rounded-lg shadow p-6 mb-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">プロジェクト編集</h2>
-            <ProjectForm
+            <UpdateProjectForm
               project={project}
               onSubmit={handleUpdate}
               onCancel={() => setIsEditing(false)}

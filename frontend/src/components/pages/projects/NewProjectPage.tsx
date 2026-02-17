@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { usePostProjectsMutation } from '@/services/api';
-import { ProjectForm } from '@/components/features/projects/ProjectForm';
+import { CreateProjectForm } from '@/components/features/projects/CreateProjectForm';
 import type { CreateProjectRequest } from '@/services/api';
 
 export function NewProjectPage() {
@@ -34,7 +34,7 @@ export function NewProjectPage() {
         </div>
 
         <div className="bg-white rounded-lg shadow p-6">
-          <ProjectForm
+          <CreateProjectForm
             onSubmit={handleSubmit}
             onCancel={handleCancel}
             isLoading={isLoading}
