@@ -16,8 +16,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <Link 
         href={`/projects/${project.id}`}
         aria-label={`${project.name}の詳細を表示`}
+        className="block cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg"
       >
-        <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg hover:border-blue-300 transition-all cursor-pointer">
+        <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg hover:border-blue-300 transition-all">
           <div className="flex justify-between items-start mb-4">
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-gray-900 mb-1">{project.name}</h3>
@@ -39,7 +40,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
                 aria-label={`リポジトリ ${project.repositoryUrl} を新しいタブで開く`}
-                className="text-sm text-blue-600 hover:text-blue-800 hover:underline truncate block"
+                className="text-sm text-blue-600 hover:text-blue-800 hover:underline truncate block cursor-pointer"
               >
                 {project.repositoryUrl}
               </a>
