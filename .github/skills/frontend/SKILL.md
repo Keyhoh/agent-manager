@@ -35,6 +35,94 @@ frontend/
 - コンポーネントは単一責任の原則に従い、小さく保つ
 - 状態管理は必要最小限に抑え、可能な限りローカルステートを使用する
 - API通信はRTK Queryを使用して効率的に行う
-- RTK Queryはopenapi-generatorで生成されたAPIクライアントと組み合わせて使用する
+- **重要**: RTK QueryはOpenAPI仕様から`@rtk-query/codegen-openapi`で生成する（`openapi-generator`は使用しない）
 - テスト駆動開発（TDD）を推奨し、ユニットテストと統合テストを充実させる
 - コードレビューを徹底し、品質を維持する
+
+## RTK Query Code Generation
+
+**公式ドキュメント**: https://redux-toolkit.js.org/rtk-query/usage/code-generation
+
+### セットアップ手順
+
+1. **依存関係のインストール**
+   ```bash
+   npm install --save-dev @rtk-query/codegen-openapi
+   ```
+
+2. **ベースAPIの作成** (`src/services/emptyApi.ts`)
+   ```typescript
+   import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+   export const emptySplitApi = createApi({
+     reducerPath: 'api',
+     baseQuery: fetchBaseQuery({ 
+       baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api'
+     }),
+     tagTypes: ['Project', 'Task', 'Sprint', 'Agent', 'Review'],
+     endpoints: () => ({}),
+   });
+   ```
+
+3. **コードジェネレーター設定** (`openapi-config.js`)
+   ```javascript
+   const config = {
+     schemaFile: '../openapi.yaml',
+     apiFile: './src/services/emptyApi.ts',
+     apiImport: 'emptySplitApi',
+     outputFile: './src/services/api.ts',
+     exportName: 'api',
+     hooks: true,
+     tag: true,
+   };
+
+   export default config;
+   ```
+
+4. **APIエンドポイント生成**
+   ```bash
+   npx @rtk-query/codegen-openapi openapi-config.js
+   ```
+
+5. **Reduxストアの設定** (`src/store/store.ts`)
+   ```typescript
+   import { configureStore } from '@reduxjs/toolkit';
+   import { api } from '@/services/api';
+
+   export const store = configureStore({
+     reducer: {
+       [api.reducerPath]: api.reducer,
+     },
+     middleware: (getDefaultMiddleware) =>
+       getDefaultMiddleware().concat(api.middleware),
+   });
+   ```
+
+6. **コンポーネントでの使用**
+   ```typescript
+   import {
+     useGetProjectsQuery,
+     usePostProjectsMutation,
+     usePutProjectsByProjectIdMutation,
+     useDeleteProjectsByProjectIdMutation,
+   } from '@/services/api';
+   import type { Project, CreateProjectRequest } from '@/services/api';
+
+   export default function ProjectsPage() {
+     const { data: projects, isLoading, error } = useGetProjectsQuery();
+     const [createProject] = usePostProjectsMutation();
+
+     const handleCreate = async (data: CreateProjectRequest) => {
+       await createProject({ createProjectRequest: data }).unwrap();
+     };
+   }
+   ```
+
+### 重要な注意事項
+
+- **`openapi-generator`のtypescript-fetchは使用しない**: RTK Query公式の`@rtk-query/codegen-openapi`を使用すること
+- **typescript-redux-queryジェネレーターも使用しない**: これは古い`redux-query`パッケージ用（RTK Queryではない）
+- **hooks自動生成**: `hooks: true`設定により、`useGetProjectsQuery`などのhooksが自動生成される
+- **タグベースのキャッシュ無効化**: `tag: true`設定により、`providesTags`/`invalidatesTags`が自動設定される
+- **型安全性**: すべてのAPI呼び出しとレスポンスがTypeScriptで型付けされる
+
