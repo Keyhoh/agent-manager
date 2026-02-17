@@ -1,3 +1,3 @@
-export { ProjectsListPage } from './projects/ProjectsListPage';
-export { NewProjectPage } from './projects/NewProjectPage';
-export { ProjectDetailPage } from './projects/ProjectDetailPage';
+export { ProductsListPage } from './products/ProductsListPage';
+export { NewProductPage } from './products/NewProductPage';
+export { ProductDetailPage } from './products/ProductDetailPage';
