@@ -29,9 +29,15 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         {project.repositoryUrl && (
           <div className="mb-4">
-            <p className="text-sm text-blue-600 hover:text-blue-800 truncate">
+            <a
+              href={project.repositoryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="text-sm text-blue-600 hover:text-blue-800 hover:underline truncate block"
+            >
               {project.repositoryUrl}
-            </p>
+            </a>
           </div>
         )}
 
