@@ -15,7 +15,7 @@ export class PrismaSprintRepository implements SprintRepository {
     return sprints.map((s) =>
       Sprint.reconstruct({
         id: s.id,
-        projectId: s.projectId,
+        productId: s.productId,
         name: s.name,
         goal: s.goal,
         status: s.status as SprintStatus,
@@ -38,7 +38,7 @@ export class PrismaSprintRepository implements SprintRepository {
 
     return Sprint.reconstruct({
       id: sprint.id,
-      projectId: sprint.projectId,
+      productId: sprint.productId,
       name: sprint.name,
       goal: sprint.goal,
       status: sprint.status as SprintStatus,
@@ -49,16 +49,16 @@ export class PrismaSprintRepository implements SprintRepository {
     });
   }
 
-  async findByProjectId(projectId: string): Promise<Sprint[]> {
+  async findByProductId(productId: string): Promise<Sprint[]> {
     const sprints = await this.prisma.sprint.findMany({
-      where: { projectId },
+      where: { productId },
       orderBy: { createdAt: 'desc' },
     });
 
     return sprints.map((s) =>
       Sprint.reconstruct({
         id: s.id,
-        projectId: s.projectId,
+        productId: s.productId,
         name: s.name,
         goal: s.goal,
         status: s.status as SprintStatus,
@@ -74,7 +74,7 @@ export class PrismaSprintRepository implements SprintRepository {
     const created = await this.prisma.sprint.create({
       data: {
         id: sprint.id,
-        projectId: sprint.projectId,
+        productId: sprint.productId,
         name: sprint.name,
         goal: sprint.goal,
         status: sprint.status,
@@ -87,7 +87,7 @@ export class PrismaSprintRepository implements SprintRepository {
 
     return Sprint.reconstruct({
       id: created.id,
-      projectId: created.projectId,
+      productId: created.productId,
       name: created.name,
       goal: created.goal,
       status: created.status as SprintStatus,
@@ -113,7 +113,7 @@ export class PrismaSprintRepository implements SprintRepository {
 
     return Sprint.reconstruct({
       id: updated.id,
-      projectId: updated.projectId,
+      productId: updated.productId,
       name: updated.name,
       goal: updated.goal,
       status: updated.status as SprintStatus,

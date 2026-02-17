@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
 
-export class CreateProjectRequest {
+export class CreateProductRequest {
   @IsString()
   @IsNotEmpty()
   name: string;

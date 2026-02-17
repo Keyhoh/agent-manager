@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { PROJECT_REPOSITORY } from '../../domain/repository/project.repository';
-import { TASK_REPOSITORY } from '../../domain/repository/task.repository';
+import { PRODUCT_REPOSITORY } from '../../domain/repository/product.repository';
+import { BACKLOG_ITEM_REPOSITORY } from '../../domain/repository/backlog-item.repository';
 import { SPRINT_REPOSITORY } from '../../domain/repository/sprint.repository';
-import { PrismaProjectRepository } from './prisma/project.prisma.repository';
-import { PrismaTaskRepository } from './prisma/task.prisma.repository';
+import { PrismaProductRepository } from './prisma/product.prisma.repository';
+import { PrismaBacklogItemRepository } from './prisma/backlog-item.prisma.repository';
 import { PrismaSprintRepository } from './prisma/sprint.prisma.repository';
 import { PrismaService } from './prisma/prisma.service';
 
@@ -11,18 +11,18 @@ import { PrismaService } from './prisma/prisma.service';
   providers: [
     PrismaService,
     {
-      provide: PROJECT_REPOSITORY,
-      useClass: PrismaProjectRepository,
+      provide: PRODUCT_REPOSITORY,
+      useClass: PrismaProductRepository,
     },
     {
-      provide: TASK_REPOSITORY,
-      useClass: PrismaTaskRepository,
+      provide: BACKLOG_ITEM_REPOSITORY,
+      useClass: PrismaBacklogItemRepository,
     },
     {
       provide: SPRINT_REPOSITORY,
       useClass: PrismaSprintRepository,
     },
   ],
-  exports: [PROJECT_REPOSITORY, TASK_REPOSITORY, SPRINT_REPOSITORY],
+  exports: [PRODUCT_REPOSITORY, BACKLOG_ITEM_REPOSITORY, SPRINT_REPOSITORY],
 })
 export class RepositoryModule {}

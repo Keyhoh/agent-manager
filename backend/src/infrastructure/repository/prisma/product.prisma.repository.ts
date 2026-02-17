@@ -1,98 +1,98 @@
 import { Injectable } from '@nestjs/common';
-import { Project, ProjectStatus } from '../../../domain/model/project.entity';
-import { ProjectRepository } from '../../../domain/repository/project.repository';
+import { Product, ProductStatus } from '../../../domain/model/product.entity';
+import { ProductRepository } from '../../../domain/repository/product.repository';
 import { PrismaService } from './prisma.service';
 
 @Injectable()
-export class PrismaProjectRepository implements ProjectRepository {
+export class PrismaProductRepository implements ProductRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(): Promise<Project[]> {
-    const projects = await this.prisma.project.findMany({
+  async findAll(): Promise<Product[]> {
+    const products = await this.prisma.product.findMany({
       orderBy: { createdAt: 'desc' },
     });
 
-    return projects.map((p) =>
-      Project.reconstruct({
+    return products.map((p) =>
+      Product.reconstruct({
         id: p.id,
         name: p.name,
         description: p.description,
         repositoryUrl: p.repositoryUrl,
-        status: p.status as ProjectStatus,
+        status: p.status as ProductStatus,
         createdAt: p.createdAt,
         updatedAt: p.updatedAt,
       }),
     );
   }
 
-  async findById(id: string): Promise<Project | null> {
-    const project = await this.prisma.project.findUnique({
+  async findById(id: string): Promise<Product | null> {
+    const product = await this.prisma.product.findUnique({
       where: { id },
     });
 
-    if (!project) {
+    if (!product) {
       return null;
     }
 
-    return Project.reconstruct({
-      id: project.id,
-      name: project.name,
-      description: project.description,
-      repositoryUrl: project.repositoryUrl,
-      status: project.status as ProjectStatus,
-      createdAt: project.createdAt,
-      updatedAt: project.updatedAt,
+    return Product.reconstruct({
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      repositoryUrl: product.repositoryUrl,
+      status: product.status as ProductStatus,
+      createdAt: product.createdAt,
+      updatedAt: product.updatedAt,
     });
   }
 
-  async save(project: Project): Promise<Project> {
-    const created = await this.prisma.project.create({
+  async save(product: Product): Promise<Product> {
+    const created = await this.prisma.product.create({
       data: {
-        id: project.id,
-        name: project.name,
-        description: project.description,
-        repositoryUrl: project.repositoryUrl,
-        status: project.status,
-        createdAt: project.createdAt,
-        updatedAt: project.updatedAt,
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        repositoryUrl: product.repositoryUrl,
+        status: product.status,
+        createdAt: product.createdAt,
+        updatedAt: product.updatedAt,
       },
     });
 
-    return Project.reconstruct({
+    return Product.reconstruct({
       id: created.id,
       name: created.name,
       description: created.description,
       repositoryUrl: created.repositoryUrl,
-      status: created.status as ProjectStatus,
+      status: created.status as ProductStatus,
       createdAt: created.createdAt,
       updatedAt: created.updatedAt,
     });
   }
 
-  async update(project: Project): Promise<Project> {
-    const updated = await this.prisma.project.update({
-      where: { id: project.id },
+  async update(product: Product): Promise<Product> {
+    const updated = await this.prisma.product.update({
+      where: { id: product.id },
       data: {
-        name: project.name,
-        description: project.description,
-        status: project.status,
-        updatedAt: project.updatedAt,
+        name: product.name,
+        description: product.description,
+        status: product.status,
+        updatedAt: product.updatedAt,
       },
     });
 
-    return Project.reconstruct({
+    return Product.reconstruct({
       id: updated.id,
       name: updated.name,
       description: updated.description,
       repositoryUrl: updated.repositoryUrl,
-      status: updated.status as ProjectStatus,
+      status: updated.status as ProductStatus,
       createdAt: updated.createdAt,
       updatedAt: updated.updatedAt,
     });
   }
 
   async delete(id: string): Promise<void> {
-    await this.prisma.project.delete({
+    await this.prisma.product.delete({
       where: { id },
     });
   }

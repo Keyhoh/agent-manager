@@ -1,7 +1,7 @@
 import { IsEnum, IsOptional, IsString } from 'class-validator';
-import { ProjectStatus } from '../../../domain/model/project.entity';
+import { ProductStatus } from '../../../domain/model/product.entity';
 
-export class UpdateProjectRequest {
+export class UpdateProductRequest {
   @IsString()
   @IsOptional()
   name?: string;
@@ -10,7 +10,7 @@ export class UpdateProjectRequest {
   @IsOptional()
   description?: string;
 
-  @IsEnum(ProjectStatus)
+  @IsEnum(ProductStatus)
   @IsOptional()
-  status?: ProjectStatus;
+  status?: ProductStatus;
 }

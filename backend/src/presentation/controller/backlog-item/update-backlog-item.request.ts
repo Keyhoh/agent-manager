@@ -1,41 +1,36 @@
 import {
-  IsNotEmpty,
   IsOptional,
   IsString,
   IsEnum,
   IsNumber,
   IsUUID,
 } from 'class-validator';
-import { TaskPriority, TaskStatus } from '../../../domain/model/task.entity';
+import { BacklogItemPriority, BacklogItemStatus } from '../../../domain/model/backlog-item.entity';
 
-export class CreateTaskRequest {
-  @IsUUID()
-  @IsNotEmpty()
-  projectId: string;
-
+export class UpdateBacklogItemRequest {
   @IsUUID()
   @IsOptional()
   sprintId?: string;
 
   @IsUUID()
   @IsOptional()
-  parentTaskId?: string;
+  parentBacklogItemId?: string;
 
   @IsString()
-  @IsNotEmpty()
-  title: string;
+  @IsOptional()
+  title?: string;
 
   @IsString()
   @IsOptional()
   description?: string;
 
-  @IsEnum(TaskPriority)
-  @IsNotEmpty()
-  priority: TaskPriority;
-
-  @IsEnum(TaskStatus)
+  @IsEnum(BacklogItemPriority)
   @IsOptional()
-  status?: TaskStatus;
+  priority?: BacklogItemPriority;
+
+  @IsEnum(BacklogItemStatus)
+  @IsOptional()
+  status?: BacklogItemStatus;
 
   @IsString()
   @IsOptional()

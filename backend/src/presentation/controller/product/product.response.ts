@@ -1,11 +1,11 @@
-import { ProjectStatus } from '../../../domain/model/project.entity';
+import { ProductStatus } from '../../../domain/model/product.entity';
 
-export class ProjectResponse {
+export class ProductResponse {
   id: string;
   name: string;
   description: string | null;
   repositoryUrl: string;
-  status: ProjectStatus;
+  status: ProductStatus;
   createdAt: Date;
   updatedAt: Date;
 }
