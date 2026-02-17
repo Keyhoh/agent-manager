@@ -164,6 +164,95 @@ app.module.ts
         └── repository.module.ts
 ```
 
+## アーキテクチャ設計思想
+
+### Service層とUseCase層の使い分け
+
+**基本原則**: Serviceは機能的凝集、UseCaseは逐次的・通信的・手順的凝集
+
+#### Service層（機能的凝集）
+
+- **責務**: 単一のRepositoryに対する操作を提供
+- **凝集度**: 機能的凝集（Functional Cohesion）
+- **特徴**:
+  - 1つのRepositoryのみを呼び出す
+  - CRUD操作のカプセル化
+  - エラーハンドリング（NotFoundException等）の集約
+  - データアクセスの抽象化層
+
+```typescript
+@Injectable()
+export class ProjectService {
+  constructor(
+    @Inject(PROJECT_REPOSITORY)
+    private readonly projectRepository: ProjectRepository,
+  ) {}
+
+  async save(project: Project): Promise<Project> {
+    return this.projectRepository.save(project);
+  }
+
+  async findById(id: string): Promise<Project> {
+    const project = await this.projectRepository.findById(id);
+    if (!project) {
+      throw new NotFoundException(`Project with ID ${id} not found`);
+    }
+    return project;
+  }
+}
+```
+
+#### UseCase層（逐次的・通信的・手順的凝集）
+
+- **責務**: 複数のServiceを組み合わせた業務フローの実現
+- **凝集度**: 逐次的（Sequential）・通信的（Communicational）・手順的（Procedural）凝集
+- **使用する場面**:
+  - 複数のServiceを組み合わせる必要がある場合
+  - トランザクション境界を明確にする場合
+  - 複雑な業務フローがある場合
+
+```typescript
+// 例: 複数のServiceを組み合わせる場合にUseCaseを使用
+@Injectable()
+export class CreateProjectWithInitialTasksUseCase {
+  constructor(
+    private readonly projectService: ProjectService,
+    private readonly taskService: TaskService,
+    private readonly notificationService: NotificationService,
+  ) {}
+
+  async execute(command: CreateProjectCommand): Promise<Project> {
+    // 1. プロジェクト作成
+    const project = await this.projectService.save(
+      Project.create(command)
+    );
+    
+    // 2. 初期タスク作成
+    await this.taskService.createInitialTasks(project.id);
+    
+    // 3. 通知送信
+    await this.notificationService.notifyProjectCreated(project);
+    
+    return project;
+  }
+}
+```
+
+#### 設計判断基準
+
+**Serviceのみで十分な場合**:
+- 単一のRepositoryのみを操作する
+- シンプルなCRUD操作
+- 他のServiceとの連携が不要
+
+**UseCaseが必要な場合**:
+- 複数のServiceを組み合わせる
+- 複雑な業務フローがある
+- トランザクション境界を明確にしたい
+- ドメインロジックの調整が必要
+
+**現在のプロジェクトでは**: 単純なCRUD操作のため、ControllerがServiceを直接呼び出す構成を採用しています。将来的に複雑な業務フローが必要になった場合は、UseCase層を追加してください。
+
 ### 一般的な規則
 
 - クリーンコードの原則に従う

@@ -1,26 +1,19 @@
 import { Module } from '@nestjs/common';
-import { InfrastructureModule } from '../../infrastructure/infrastructure.module';
-import { CreateProjectUseCase } from './create-project.usecase';
-import { DeleteProjectUseCase } from './delete-project.usecase';
-import { GetAllProjectsUseCase } from './get-all-projects.usecase';
-import { GetProjectByIdUseCase } from './get-project-by-id.usecase';
-import { UpdateProjectUseCase } from './update-project.usecase';
 
+/**
+ * UseCaseModule
+ *
+ * 現在は使用していませんが、将来的に複雑な業務フローが必要になった場合に備えて保持しています。
+ *
+ * UseCaseを使用する場面:
+ * - 複数のServiceを組み合わせる必要がある場合
+ * - トランザクション境界を明確にする必要がある場合
+ * - 複雑な業務フロー（例: プロジェクト作成 + 初期タスク作成 + 通知送信）がある場合
+ *
+ * 現在の実装では単純なCRUD操作のため、ControllerがServiceを直接呼び出しています。
+ */
 @Module({
-  imports: [InfrastructureModule],
-  providers: [
-    CreateProjectUseCase,
-    DeleteProjectUseCase,
-    GetAllProjectsUseCase,
-    GetProjectByIdUseCase,
-    UpdateProjectUseCase,
-  ],
-  exports: [
-    CreateProjectUseCase,
-    DeleteProjectUseCase,
-    GetAllProjectsUseCase,
-    GetProjectByIdUseCase,
-    UpdateProjectUseCase,
-  ],
+  providers: [],
+  exports: [],
 })
 export class UsecaseModule {}
