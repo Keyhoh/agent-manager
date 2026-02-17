@@ -11,11 +11,11 @@ services:
     image: postgres:latest
     restart: unless-stopped
     volumes:
-      - db:/var/lib/postgresql/data
+      - agent-manager-db:/var/lib/postgresql
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
 
 volumes:
-  db:
+  agent-manager-db:
