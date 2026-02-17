@@ -23,15 +23,15 @@ export class SprintController {
 
   @Get()
   async findAll(
-    @Query('projectId') projectId?: string,
+    @Query('productId') productId?: string,
   ): Promise<SprintResponse[]> {
-    const sprints = projectId
-      ? await this.sprintService.findByProjectId(projectId)
+    const sprints = productId
+      ? await this.sprintService.findByProductId(productId)
       : await this.sprintService.findAll();
 
     return sprints.map((s) => ({
       id: s.id,
-      projectId: s.projectId,
+      productId: s.productId,
       name: s.name,
       goal: s.goal,
       status: s.status,
@@ -47,7 +47,7 @@ export class SprintController {
     const sprint = await this.sprintService.findById(id);
     return {
       id: sprint.id,
-      projectId: sprint.projectId,
+      productId: sprint.productId,
       name: sprint.name,
       goal: sprint.goal,
       status: sprint.status,
@@ -62,7 +62,7 @@ export class SprintController {
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() dto: CreateSprintRequest): Promise<SprintResponse> {
     const sprint = Sprint.create({
-      projectId: dto.projectId,
+      productId: dto.productId,
       name: dto.name,
       goal: dto.goal ?? null,
       status: dto.status ?? SprintStatus.PLANNED,
@@ -73,7 +73,7 @@ export class SprintController {
     const saved = await this.sprintService.save(sprint);
     return {
       id: saved.id,
-      projectId: saved.projectId,
+      productId: saved.productId,
       name: saved.name,
       goal: saved.goal,
       status: saved.status,
@@ -124,7 +124,7 @@ export class SprintController {
     const updated = await this.sprintService.update(sprint);
     return {
       id: updated.id,
-      projectId: updated.projectId,
+      productId: updated.productId,
       name: updated.name,
       goal: updated.goal,
       status: updated.status,

@@ -32,8 +32,8 @@ export class SprintService {
     return this.sprintRepository.findAll();
   }
 
-  async findByProjectId(projectId: string): Promise<Sprint[]> {
-    return this.sprintRepository.findByProjectId(projectId);
+  async findByProductId(productId: string): Promise<Sprint[]> {
+    return this.sprintRepository.findByProductId(productId);
   }
 
   async update(sprint: Sprint): Promise<Sprint> {

@@ -2,7 +2,7 @@ import { SprintStatus } from '../../../domain/model/sprint.entity';
 
 export class SprintResponse {
   id: string;
-  projectId: string;
+  productId: string;
   name: string;
   goal: string | null;
   status: SprintStatus;

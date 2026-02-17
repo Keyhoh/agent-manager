@@ -11,7 +11,7 @@ import { SprintStatus } from '../../../domain/model/sprint.entity';
 export class CreateSprintRequest {
   @IsUUID()
   @IsNotEmpty()
-  projectId: string;
+  productId: string;
 
   @IsString()
   @IsNotEmpty()
