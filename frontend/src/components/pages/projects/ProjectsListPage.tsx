@@ -11,7 +11,7 @@ export function ProjectsListPage() {
     return (
       <div className="min-h-screen bg-gray-50 p-8">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4" role="alert">
             <p className="text-red-800">プロジェクトの読み込みに失敗しました</p>
           </div>
         </div>
@@ -28,6 +28,7 @@ export function ProjectsListPage() {
             <Link
               href="/projects/new"
               className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              aria-label="新しいプロジェクトを作成"
             >
               新規プロジェクト
             </Link>
@@ -37,8 +38,9 @@ export function ProjectsListPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {isLoading ? (
-          <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <div className="flex justify-center items-center py-12" role="status" aria-live="polite">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" aria-hidden="true"></div>
+            <span className="sr-only">読み込み中...</span>
           </div>
         ) : projects && projects.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -21,50 +21,60 @@ export function UpdateProjectForm({ project, onSubmit, onCancel, isLoading }: Up
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4" aria-label="プロジェクト編集フォーム">
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-          プロジェクト名 *
+          プロジェクト名 <span aria-label="必須">*</span>
         </label>
         <input
           id="name"
+          name="name"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder:text-gray-400"
           placeholder="プロジェクト名を入力"
+          autoComplete="off"
           required
+          aria-required="true"
           disabled={isLoading}
+          aria-disabled={isLoading}
         />
       </div>
 
       <div>
         <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-          説明 *
+          説明 <span aria-label="必須">*</span>
         </label>
         <textarea
           id="description"
+          name="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder:text-gray-400"
           placeholder="プロジェクトの説明を入力"
           required
+          aria-required="true"
           disabled={isLoading}
+          aria-disabled={isLoading}
         />
       </div>
 
       <div>
         <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
-          ステータス *
+          ステータス <span aria-label="必須">*</span>
         </label>
         <select
           id="status"
+          name="status"
           value={status}
           onChange={(e) => setStatus(e.target.value as 'ACTIVE' | 'ARCHIVED')}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-gray-900"
           required
+          aria-required="true"
           disabled={isLoading}
+          aria-disabled={isLoading}
         >
           <option value="ACTIVE">アクティブ</option>
           <option value="ARCHIVED">アーカイブ</option>
@@ -77,6 +87,7 @@ export function UpdateProjectForm({ project, onSubmit, onCancel, isLoading }: Up
           onClick={onCancel}
           className="flex-1 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
           disabled={isLoading}
+          aria-disabled={isLoading}
         >
           キャンセル
         </button>
@@ -84,6 +95,8 @@ export function UpdateProjectForm({ project, onSubmit, onCancel, isLoading }: Up
           type="submit"
           className="flex-1 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
           disabled={isLoading}
+          aria-disabled={isLoading}
+          aria-busy={isLoading}
         >
           {isLoading ? '更新中...' : '更新'}
         </button>
