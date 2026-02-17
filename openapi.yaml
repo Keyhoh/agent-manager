@@ -1,0 +1,863 @@
+openapi: 3.0.3
+info:
+  title: Agent Manager API
+  description: AIエージェントによるスクラム開発プロセスを自律的に実行するタスク管理システムのAPI
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api
+    description: Development server
+
+tags:
+  - name: Projects
+    description: プロジェクト管理
+  - name: Tasks
+    description: タスク管理
+  - name: Sprints
+    description: スプリント管理
+  - name: Agents
+    description: AIエージェント管理
+  - name: Reviews
+    description: スプリントレビュー管理
+
+paths:
+  /projects:
+    get:
+      tags:
+        - Projects
+      summary: プロジェクト一覧取得
+      responses:
+        '200':
+          description: プロジェクト一覧
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+    post:
+      tags:
+        - Projects
+      summary: プロジェクト作成
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectRequest'
+      responses:
+        '201':
+          description: プロジェクト作成成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+
+  /projects/{projectId}:
+    get:
+      tags:
+        - Projects
+      summary: プロジェクト詳細取得
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: プロジェクト詳細
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          description: プロジェクトが見つかりません
+    put:
+      tags:
+        - Projects
+      summary: プロジェクト更新
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectRequest'
+      responses:
+        '200':
+          description: プロジェクト更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+    delete:
+      tags:
+        - Projects
+      summary: プロジェクト削除
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: プロジェクト削除成功
+
+  /projects/{projectId}/backlog:
+    get:
+      tags:
+        - Tasks
+      summary: プロダクトバックログ取得
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: バックログタスク一覧
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+
+  /tasks:
+    post:
+      tags:
+        - Tasks
+      summary: タスク作成
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTaskRequest'
+      responses:
+        '201':
+          description: タスク作成成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+
+  /tasks/{taskId}:
+    get:
+      tags:
+        - Tasks
+      summary: タスク詳細取得
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: タスク詳細
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '404':
+          description: タスクが見つかりません
+    put:
+      tags:
+        - Tasks
+      summary: タスク更新
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTaskRequest'
+      responses:
+        '200':
+          description: タスク更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+    delete:
+      tags:
+        - Tasks
+      summary: タスク削除
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: タスク削除成功
+
+  /tasks/{taskId}/split:
+    post:
+      tags:
+        - Tasks
+      summary: タスク分割（AI実行）
+      description: 複雑なタスクをAIが自動的に小さなタスクに分割
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: タスク分割成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+
+  /tasks/{taskId}/execute:
+    post:
+      tags:
+        - Tasks
+      summary: タスク実行（AI実行）
+      description: AIがタスクを自律的に実行
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: タスク実行成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskExecutionResult'
+
+  /sprints:
+    get:
+      tags:
+        - Sprints
+      summary: スプリント一覧取得
+      parameters:
+        - name: projectId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: スプリント一覧
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sprint'
+    post:
+      tags:
+        - Sprints
+      summary: スプリント作成
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSprintRequest'
+      responses:
+        '201':
+          description: スプリント作成成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sprint'
+
+  /sprints/{sprintId}:
+    get:
+      tags:
+        - Sprints
+      summary: スプリント詳細取得
+      parameters:
+        - name: sprintId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: スプリント詳細
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sprint'
+        '404':
+          description: スプリントが見つかりません
+    put:
+      tags:
+        - Sprints
+      summary: スプリント更新
+      parameters:
+        - name: sprintId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSprintRequest'
+      responses:
+        '200':
+          description: スプリント更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sprint'
+
+  /sprints/{sprintId}/plan:
+    post:
+      tags:
+        - Sprints
+      summary: スプリントプラン（AI実行）
+      description: スクラムマスターAIがスプリントプランを作成
+      parameters:
+        - name: sprintId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: スプリントプラン作成成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sprint'
+
+  /sprints/{sprintId}/tasks:
+    get:
+      tags:
+        - Sprints
+      summary: スプリントバックログ取得
+      parameters:
+        - name: sprintId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: スプリントバックログ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+
+  /sprints/{sprintId}/burndown:
+    get:
+      tags:
+        - Sprints
+      summary: バーンダウンチャートデータ取得
+      parameters:
+        - name: sprintId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: バーンダウンチャートデータ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BurndownChart'
+
+  /agents:
+    get:
+      tags:
+        - Agents
+      summary: AIエージェント一覧取得
+      responses:
+        '200':
+          description: AIエージェント一覧
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Agent'
+
+  /agents/{agentId}:
+    get:
+      tags:
+        - Agents
+      summary: AIエージェント詳細取得
+      parameters:
+        - name: agentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: AIエージェント詳細
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+
+  /reviews:
+    post:
+      tags:
+        - Reviews
+      summary: スプリントレビュー作成
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReviewRequest'
+      responses:
+        '201':
+          description: レビュー作成成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+
+  /reviews/{reviewId}:
+    get:
+      tags:
+        - Reviews
+      summary: レビュー詳細取得
+      parameters:
+        - name: reviewId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: レビュー詳細
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+    put:
+      tags:
+        - Reviews
+      summary: レビュー更新
+      parameters:
+        - name: reviewId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateReviewRequest'
+      responses:
+        '200':
+          description: レビュー更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+
+components:
+  schemas:
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        repositoryUrl:
+          type: string
+          format: uri
+          description: GitHub リポジトリURL
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - ARCHIVED
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    CreateProjectRequest:
+      type: object
+      required:
+        - name
+        - repositoryUrl
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        repositoryUrl:
+          type: string
+          format: uri
+
+    UpdateProjectRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - ARCHIVED
+
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        sprintId:
+          type: string
+          format: uuid
+          nullable: true
+        parentTaskId:
+          type: string
+          format: uuid
+          nullable: true
+          description: 親タスクID（タスク分割時）
+        title:
+          type: string
+        description:
+          type: string
+        priority:
+          type: string
+          enum:
+            - LOW
+            - MEDIUM
+            - HIGH
+            - CRITICAL
+        status:
+          type: string
+          enum:
+            - BACKLOG
+            - SPRINT_BACKLOG
+            - IN_PROGRESS
+            - REVIEW
+            - DONE
+        assignedAgentId:
+          type: string
+          format: uuid
+          nullable: true
+        storyPoint:
+          type: integer
+          description: ストーリーポイント（進捗可視化用）
+          nullable: true
+        artifactPath:
+          type: string
+          nullable: true
+          description: 成果物のパス
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    CreateTaskRequest:
+      type: object
+      required:
+        - projectId
+        - title
+        - description
+      properties:
+        projectId:
+          type: string
+          format: uuid
+        parentTaskId:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        priority:
+          type: string
+          enum:
+            - LOW
+            - MEDIUM
+            - HIGH
+            - CRITICAL
+          default: MEDIUM
+        storyPoint:
+          type: integer
+
+    UpdateTaskRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        priority:
+          type: string
+          enum:
+            - LOW
+            - MEDIUM
+            - HIGH
+            - CRITICAL
+        status:
+          type: string
+          enum:
+            - BACKLOG
+            - SPRINT_BACKLOG
+            - IN_PROGRESS
+            - REVIEW
+            - DONE
+        assignedAgentId:
+          type: string
+          format: uuid
+        storyPoint:
+          type: integer
+        sprintId:
+          type: string
+          format: uuid
+        artifactPath:
+          type: string
+
+    TaskExecutionResult:
+      type: object
+      properties:
+        taskId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+            - SUCCESS
+            - FAILED
+            - IN_PROGRESS
+        artifactPath:
+          type: string
+          nullable: true
+        commitHash:
+          type: string
+          nullable: true
+          description: Git commit hash
+        message:
+          type: string
+        executedAt:
+          type: string
+          format: date-time
+
+    Sprint:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        goal:
+          type: string
+        status:
+          type: string
+          enum:
+            - PLANNED
+            - ACTIVE
+            - COMPLETED
+        startDate:
+          type: string
+          format: date-time
+          nullable: true
+        endDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: AIが自動設定（レビュータイミング）
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    CreateSprintRequest:
+      type: object
+      required:
+        - projectId
+        - name
+        - goal
+      properties:
+        projectId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        goal:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+
+    UpdateSprintRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        goal:
+          type: string
+        status:
+          type: string
+          enum:
+            - PLANNED
+            - ACTIVE
+            - COMPLETED
+        endDate:
+          type: string
+          format: date-time
+
+    BurndownChart:
+      type: object
+      properties:
+        sprintId:
+          type: string
+          format: uuid
+        dataPoints:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+              remainingStoryPoints:
+                type: integer
+              idealStoryPoints:
+                type: integer
+
+    Agent:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        role:
+          type: string
+          enum:
+            - PRODUCT_OWNER
+            - SCRUM_MASTER
+            - DEVELOPER
+            - REVIEWER
+            - QA
+        aiProvider:
+          type: string
+          description: AI提供元（例：GitHub Copilot）
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+        createdAt:
+          type: string
+          format: date-time
+
+    Review:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        sprintId:
+          type: string
+          format: uuid
+        reviewerId:
+          type: string
+          description: レビュー実施者（人間）のID
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: 成果物の評価（1-5）
+        comment:
+          type: string
+        approved:
+          type: boolean
+          description: 承認フラグ
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    CreateReviewRequest:
+      type: object
+      required:
+        - sprintId
+        - reviewerId
+        - rating
+        - approved
+      properties:
+        sprintId:
+          type: string
+          format: uuid
+        reviewerId:
+          type: string
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        comment:
+          type: string
+        approved:
+          type: boolean
+
+    UpdateReviewRequest:
+      type: object
+      properties:
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        comment:
+          type: string
+        approved:
+          type: boolean

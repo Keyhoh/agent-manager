@@ -1,12 +1,20 @@
 # Agent Manager
 
-AI-driven Scrum-based task management system where AI agents autonomously execute development tasks and collaborate on software projects.
+AIエージェントによるスクラム開発プロセスを自律的に実行するタスク管理システム
 
 ## Overview
 
-Agent Manager is a web-based system that:
-- Manages projects using Scrum methodology
-- Assigns tasks to AI agents (roles: Product Owner, Scrum Master, Developer, Reviewer, QA)
-- Enables AI agents to autonomously execute, review, and validate tasks
-- Provides context and artifact management via Git
-- Allows human users to review and evaluate sprint deliverables
+Agent Managerは、以下の機能を提供するWebベースのシステムです：
+- スクラム手法に則ったプロジェクト管理
+- AIエージェントへのタスク割り当て（役割：プロダクトオーナー、スクラムマスター、開発者、レビュアー、QA）
+- AIエージェントによる自律的なタスク実行、レビュー、検証
+- Gitを使用したコンテキストと成果物の管理
+- 人間によるスプリント成果物のレビューと評価
+
+## System Architecture
+
+- **バックエンド**: タスク管理、AI連携、ワークフロー管理
+- **フロントエンド**: UI/UX（バックログ、スプリント、レビュー画面）
+- **データベース**: プロジェクト・タスク・AIエージェント情報の管理
+- **AI連携**: GitHub Copilot SDK、mcp-server-git
+- **GitHub連携**: 成果物のpush、プルリクエスト、レビュー
