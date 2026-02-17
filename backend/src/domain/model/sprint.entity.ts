@@ -8,7 +8,7 @@ export enum SprintStatus {
 
 export interface SprintProps {
   id: string;
-  projectId: string;
+  productId: string;
   name: string;
   goal: string | null;
   status: SprintStatus;
@@ -40,8 +40,8 @@ export class Sprint {
     return this.props.id;
   }
 
-  get projectId(): string {
-    return this.props.projectId;
+  get productId(): string {
+    return this.props.productId;
   }
 
   get name(): string {

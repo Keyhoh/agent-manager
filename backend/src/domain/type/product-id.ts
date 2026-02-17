@@ -1,19 +1,19 @@
-export class ProjectId {
+export class ProductId {
   private constructor(private readonly value: string) {
     if (!this.isValidUUID(value)) {
-      throw new Error('Invalid project ID format');
+      throw new Error('Invalid product ID format');
     }
   }
 
-  static create(value: string): ProjectId {
-    return new ProjectId(value);
+  static create(value: string): ProductId {
+    return new ProductId(value);
   }
 
   getValue(): string {
     return this.value;
   }
 
-  equals(other: ProjectId): boolean {
+  equals(other: ProductId): boolean {
     return this.value === other.value;
   }
 

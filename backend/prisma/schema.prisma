@@ -20,12 +20,12 @@ datasource db {
   provider = "postgresql"
 }
 
-enum ProjectStatus {
+enum ProductStatus {
   ACTIVE
   ARCHIVED
 }
 
-enum TaskStatus {
+enum BacklogItemStatus {
   BACKLOG
   SPRINT_BACKLOG
   IN_PROGRESS
@@ -33,7 +33,7 @@ enum TaskStatus {
   DONE
 }
 
-enum TaskPriority {
+enum BacklogItemPriority {
   LOW
   MEDIUM
   HIGH
@@ -46,50 +46,50 @@ enum SprintStatus {
   COMPLETED
 }
 
-model Project {
+model Product {
   id            String        @id @default(uuid())
   name          String
   description   String?
   repositoryUrl String
-  status        ProjectStatus @default(ACTIVE)
+  status        ProductStatus @default(ACTIVE)
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   
-  tasks         Task[]
+  backlogItems  BacklogItem[]
   sprints       Sprint[]
 
-  @@map("projects")
+  @@map("products")
 }
 
-model Task {
-  id              String       @id @default(uuid())
-  projectId       String
-  sprintId        String?
-  parentTaskId    String?
-  title           String
-  description     String?
-  priority        TaskPriority @default(MEDIUM)
-  status          TaskStatus   @default(BACKLOG)
-  assignedAgentId String?
-  storyPoint      Int?
-  artifactPath    String?
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+model BacklogItem {
+  id                String              @id @default(uuid())
+  productId         String
+  sprintId          String?
+  parentBacklogItemId String?
+  title             String
+  description       String?
+  priority          BacklogItemPriority @default(MEDIUM)
+  status            BacklogItemStatus   @default(BACKLOG)
+  assignedAgentId   String?
+  storyPoint        Int?
+  artifactPath      String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
   
-  project         Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  sprint          Sprint?      @relation(fields: [sprintId], references: [id], onDelete: SetNull)
-  parentTask      Task?        @relation("TaskHierarchy", fields: [parentTaskId], references: [id], onDelete: SetNull)
-  childTasks      Task[]       @relation("TaskHierarchy")
+  product           Product             @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sprint            Sprint?             @relation(fields: [sprintId], references: [id], onDelete: SetNull)
+  parentBacklogItem BacklogItem?        @relation("BacklogItemHierarchy", fields: [parentBacklogItemId], references: [id], onDelete: SetNull)
+  childBacklogItems BacklogItem[]       @relation("BacklogItemHierarchy")
   
-  @@index([projectId])
+  @@index([productId])
   @@index([sprintId])
   @@index([status])
-  @@map("tasks")
+  @@map("backlog_items")
 }
 
 model Sprint {
   id          String        @id @default(uuid())
-  projectId   String
+  productId   String
   name        String
   goal        String?
   status      SprintStatus  @default(PLANNED)
@@ -98,10 +98,10 @@ model Sprint {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   
-  project     Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  tasks       Task[]
+  product      Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  backlogItems BacklogItem[]
   
-  @@index([projectId])
+  @@index([productId])
   @@index([status])
   @@map("sprints")
 }

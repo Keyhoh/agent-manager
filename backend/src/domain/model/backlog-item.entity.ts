@@ -1,6 +1,6 @@
 import { v7 as uuidv7 } from 'uuid';
 
-export enum TaskStatus {
+export enum BacklogItemStatus {
   BACKLOG = 'BACKLOG',
   SPRINT_BACKLOG = 'SPRINT_BACKLOG',
   IN_PROGRESS = 'IN_PROGRESS',
@@ -8,22 +8,22 @@ export enum TaskStatus {
   DONE = 'DONE',
 }
 
-export enum TaskPriority {
+export enum BacklogItemPriority {
   LOW = 'LOW',
   MEDIUM = 'MEDIUM',
   HIGH = 'HIGH',
   CRITICAL = 'CRITICAL',
 }
 
-export interface TaskProps {
+export interface BacklogItemProps {
   id: string;
-  projectId: string;
+  productId: string;
   sprintId: string | null;
-  parentTaskId: string | null;
+  parentBacklogItemId: string | null;
   title: string;
   description: string | null;
-  priority: TaskPriority;
-  status: TaskStatus;
+  priority: BacklogItemPriority;
+  status: BacklogItemStatus;
   assignedAgentId: string | null;
   storyPoint: number | null;
   artifactPath: string | null;
@@ -31,13 +31,13 @@ export interface TaskProps {
   updatedAt: Date;
 }
 
-export class Task {
-  private constructor(private readonly props: TaskProps) {}
+export class BacklogItem {
+  private constructor(private readonly props: BacklogItemProps) {}
 
   static create(
-    props: Omit<TaskProps, 'id' | 'createdAt' | 'updatedAt'>,
-  ): Task {
-    return new Task({
+    props: Omit<BacklogItemProps, 'id' | 'createdAt' | 'updatedAt'>,
+  ): BacklogItem {
+    return new BacklogItem({
       ...props,
       id: uuidv7(),
       createdAt: new Date(),
@@ -45,24 +45,24 @@ export class Task {
     });
   }
 
-  static reconstruct(props: TaskProps): Task {
-    return new Task(props);
+  static reconstruct(props: BacklogItemProps): BacklogItem {
+    return new BacklogItem(props);
   }
 
   get id(): string {
     return this.props.id;
   }
 
-  get projectId(): string {
-    return this.props.projectId;
+  get productId(): string {
+    return this.props.productId;
   }
 
   get sprintId(): string | null {
     return this.props.sprintId;
   }
 
-  get parentTaskId(): string | null {
-    return this.props.parentTaskId;
+  get parentBacklogItemId(): string | null {
+    return this.props.parentBacklogItemId;
   }
 
   get title(): string {
@@ -73,11 +73,11 @@ export class Task {
     return this.props.description;
   }
 
-  get priority(): TaskPriority {
+  get priority(): BacklogItemPriority {
     return this.props.priority;
   }
 
-  get status(): TaskStatus {
+  get status(): BacklogItemStatus {
     return this.props.status;
   }
 
@@ -101,108 +101,108 @@ export class Task {
     return this.props.updatedAt;
   }
 
-  updateTitle(title: string): Task {
-    return new Task({
+  updateTitle(title: string): BacklogItem {
+    return new BacklogItem({
       ...this.props,
       title,
       updatedAt: new Date(),
     });
   }
 
-  updateDescription(description: string | null): Task {
-    return new Task({
+  updateDescription(description: string | null): BacklogItem {
+    return new BacklogItem({
       ...this.props,
       description,
       updatedAt: new Date(),
     });
   }
 
-  updatePriority(priority: TaskPriority): Task {
-    return new Task({
+  updatePriority(priority: BacklogItemPriority): BacklogItem {
+    return new BacklogItem({
       ...this.props,
       priority,
       updatedAt: new Date(),
     });
   }
 
-  updateStatus(status: TaskStatus): Task {
-    return new Task({
+  updateStatus(status: BacklogItemStatus): BacklogItem {
+    return new BacklogItem({
       ...this.props,
       status,
       updatedAt: new Date(),
     });
   }
 
-  assignToSprint(sprintId: string): Task {
-    return new Task({
+  assignToSprint(sprintId: string): BacklogItem {
+    return new BacklogItem({
       ...this.props,
       sprintId,
-      status: TaskStatus.SPRINT_BACKLOG,
+      status: BacklogItemStatus.SPRINT_BACKLOG,
       updatedAt: new Date(),
     });
   }
 
-  removeFromSprint(): Task {
-    return new Task({
+  removeFromSprint(): BacklogItem {
+    return new BacklogItem({
       ...this.props,
       sprintId: null,
-      status: TaskStatus.BACKLOG,
+      status: BacklogItemStatus.BACKLOG,
       updatedAt: new Date(),
     });
   }
 
-  assignAgent(agentId: string): Task {
-    return new Task({
+  assignAgent(agentId: string): BacklogItem {
+    return new BacklogItem({
       ...this.props,
       assignedAgentId: agentId,
       updatedAt: new Date(),
     });
   }
 
-  unassignAgent(): Task {
-    return new Task({
+  unassignAgent(): BacklogItem {
+    return new BacklogItem({
       ...this.props,
       assignedAgentId: null,
       updatedAt: new Date(),
     });
   }
 
-  updateStoryPoint(storyPoint: number | null): Task {
-    return new Task({
+  updateStoryPoint(storyPoint: number | null): BacklogItem {
+    return new BacklogItem({
       ...this.props,
       storyPoint,
       updatedAt: new Date(),
     });
   }
 
-  updateArtifactPath(artifactPath: string | null): Task {
-    return new Task({
+  updateArtifactPath(artifactPath: string | null): BacklogItem {
+    return new BacklogItem({
       ...this.props,
       artifactPath,
       updatedAt: new Date(),
     });
   }
 
-  startProgress(): Task {
-    return new Task({
+  startProgress(): BacklogItem {
+    return new BacklogItem({
       ...this.props,
-      status: TaskStatus.IN_PROGRESS,
+      status: BacklogItemStatus.IN_PROGRESS,
       updatedAt: new Date(),
     });
   }
 
-  moveToReview(): Task {
-    return new Task({
+  moveToReview(): BacklogItem {
+    return new BacklogItem({
       ...this.props,
-      status: TaskStatus.REVIEW,
+      status: BacklogItemStatus.REVIEW,
       updatedAt: new Date(),
     });
   }
 
-  complete(): Task {
-    return new Task({
+  complete(): BacklogItem {
+    return new BacklogItem({
       ...this.props,
-      status: TaskStatus.DONE,
+      status: BacklogItemStatus.DONE,
       updatedAt: new Date(),
     });
   }

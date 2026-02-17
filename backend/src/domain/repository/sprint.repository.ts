@@ -3,7 +3,7 @@ import { Sprint } from '../model/sprint.entity';
 export interface SprintRepository {
   findAll(): Promise<Sprint[]>;
   findById(id: string): Promise<Sprint | null>;
-  findByProjectId(projectId: string): Promise<Sprint[]>;
+  findByProductId(productId: string): Promise<Sprint[]>;
   save(sprint: Sprint): Promise<Sprint>;
   update(sprint: Sprint): Promise<Sprint>;
   delete(id: string): Promise<void>;
