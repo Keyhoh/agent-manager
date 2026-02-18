@@ -6,14 +6,20 @@ import { SprintForm } from '@/components/features/sprints';
 import type { CreateSprintRequest, UpdateSprintRequest } from '@/libs/api';
 import { use } from 'react';
 
-export default function NewSprintPage(props: { params: Promise<{ id: string }> }) {
+export default function NewSprintPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = use(props.params);
   const router = useRouter();
   const [createSprint, { isLoading }] = usePostSprintsMutation();
 
-  const handleSubmit = async (data: CreateSprintRequest | UpdateSprintRequest) => {
+  const handleSubmit = async (
+    data: CreateSprintRequest | UpdateSprintRequest,
+  ) => {
     try {
-      await createSprint({ createSprintRequest: data as CreateSprintRequest }).unwrap();
+      await createSprint({
+        createSprintRequest: data as CreateSprintRequest,
+      }).unwrap();
       router.push(`/projects/${params.id}/sprints`);
     } catch (error) {
       console.error('Failed to create sprint:', error);

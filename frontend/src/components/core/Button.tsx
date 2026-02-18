@@ -11,10 +11,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'border-transparent text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500',
-  secondary: 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-blue-500',
-  danger: 'border-transparent text-white bg-red-600 hover:bg-red-700 focus:ring-red-500',
-  ghost: 'border-transparent text-blue-600 hover:text-blue-800 hover:bg-blue-50 focus:ring-blue-500',
+  primary:
+    'border-transparent text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500',
+  secondary:
+    'border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-blue-500',
+  danger:
+    'border-transparent text-white bg-red-600 hover:bg-red-700 focus:ring-red-500',
+  ghost:
+    'border-transparent text-blue-600 hover:text-blue-800 hover:bg-blue-50 focus:ring-blue-500',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -36,11 +40,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       type = 'button',
       ...props
     },
-    ref
+    ref,
   ) => {
-    const baseStyles = 'inline-flex items-center justify-center border rounded-md shadow-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed transition-colors';
+    const baseStyles =
+      'inline-flex items-center justify-center border rounded-md shadow-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed transition-colors';
     const widthStyles = fullWidth ? 'w-full' : '';
-    
+
     return (
       <button
         ref={ref}
@@ -77,7 +82,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = 'Button';

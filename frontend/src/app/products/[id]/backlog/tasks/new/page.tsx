@@ -6,14 +6,18 @@ import { TaskForm } from '@/components/features/tasks';
 import type { CreateTaskRequest, UpdateTaskRequest } from '@/libs/api';
 import { use } from 'react';
 
-export default function NewTaskPage(props: { params: Promise<{ id: string }> }) {
+export default function NewTaskPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = use(props.params);
   const router = useRouter();
   const [createTask, { isLoading }] = usePostTasksMutation();
 
   const handleSubmit = async (data: CreateTaskRequest | UpdateTaskRequest) => {
     try {
-      await createTask({ createTaskRequest: data as CreateTaskRequest }).unwrap();
+      await createTask({
+        createTaskRequest: data as CreateTaskRequest,
+      }).unwrap();
       router.push(`/projects/${params.id}/backlog`);
     } catch (error) {
       console.error('Failed to create task:', error);

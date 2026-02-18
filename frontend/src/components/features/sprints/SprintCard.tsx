@@ -21,7 +21,9 @@ const statusColors: Record<string, string> = {
 };
 
 export function SprintCard({ sprint, projectId }: SprintCardProps) {
-  const statusColor = sprint.status ? statusColors[sprint.status] : 'bg-gray-100 text-gray-800';
+  const statusColor = sprint.status
+    ? statusColors[sprint.status]
+    : 'bg-gray-100 text-gray-800';
   const statusLabel = sprint.status ? statusLabels[sprint.status] : '不明';
 
   return (
@@ -32,7 +34,9 @@ export function SprintCard({ sprint, projectId }: SprintCardProps) {
       >
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-semibold text-lg line-clamp-1">{sprint.name}</h3>
-          <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${statusColor}`}>
+          <span
+            className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${statusColor}`}
+          >
             {statusLabel}
           </span>
         </div>

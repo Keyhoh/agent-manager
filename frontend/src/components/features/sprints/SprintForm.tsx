@@ -7,27 +7,40 @@ import type { CreateSprintRequest, UpdateSprintRequest } from '@/libs/api';
 interface SprintFormProps {
   projectId: string;
   initialData?: UpdateSprintRequest & { id?: string };
-  onSubmit: (data: CreateSprintRequest | UpdateSprintRequest) => Promise<void> | void;
+  onSubmit: (
+    data: CreateSprintRequest | UpdateSprintRequest,
+  ) => Promise<void> | void;
   onCancel: () => void;
   isLoading?: boolean;
 }
 
-const statusOptions: Array<{ value: UpdateSprintRequest['status']; label: string }> = [
+const statusOptions: Array<{
+  value: UpdateSprintRequest['status'];
+  label: string;
+}> = [
   { value: 'PLANNED', label: '計画中' },
   { value: 'ACTIVE', label: '実行中' },
   { value: 'COMPLETED', label: '完了' },
 ];
 
-export function SprintForm({ projectId, initialData, onSubmit, onCancel, isLoading }: SprintFormProps) {
+export function SprintForm({
+  projectId,
+  initialData,
+  onSubmit,
+  onCancel,
+  isLoading,
+}: SprintFormProps) {
   const [name, setName] = useState(initialData?.name ?? '');
   const [goal, setGoal] = useState(initialData?.goal ?? '');
-  const [status, setStatus] = useState<UpdateSprintRequest['status']>(initialData?.status ?? 'PLANNED');
+  const [status, setStatus] = useState<UpdateSprintRequest['status']>(
+    initialData?.status ?? 'PLANNED',
+  );
   const [startDate, setStartDate] = useState(initialData?.endDate ?? '');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
+
     const newErrors: Record<string, string> = {};
     if (!name.trim()) {
       newErrors.name = 'スプリント名を入力してください';
@@ -74,7 +87,9 @@ export function SprintForm({ projectId, initialData, onSubmit, onCancel, isLoadi
           disabled={isLoading}
           placeholder="Sprint 1"
         />
-        {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
+        {errors.name && (
+          <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+        )}
       </div>
 
       <div>
@@ -88,7 +103,9 @@ export function SprintForm({ projectId, initialData, onSubmit, onCancel, isLoadi
           disabled={isLoading}
           placeholder="このスプリントで達成したい目標を入力してください"
         />
-        {errors.goal && <p className="mt-1 text-sm text-red-600">{errors.goal}</p>}
+        {errors.goal && (
+          <p className="mt-1 text-sm text-red-600">{errors.goal}</p>
+        )}
       </div>
 
       {initialData && (
@@ -97,7 +114,9 @@ export function SprintForm({ projectId, initialData, onSubmit, onCancel, isLoadi
           <Select
             id="status"
             value={status ?? ''}
-            onChange={(e) => setStatus(e.target.value as UpdateSprintRequest['status'])}
+            onChange={(e) =>
+              setStatus(e.target.value as UpdateSprintRequest['status'])
+            }
             disabled={isLoading}
           >
             {statusOptions.map((option) => (
@@ -124,7 +143,12 @@ export function SprintForm({ projectId, initialData, onSubmit, onCancel, isLoadi
         <Button type="submit" disabled={isLoading} variant="primary">
           {isLoading ? '保存中...' : initialData ? '更新' : '作成'}
         </Button>
-        <Button type="button" onClick={onCancel} variant="secondary" disabled={isLoading}>
+        <Button
+          type="button"
+          onClick={onCancel}
+          variant="secondary"
+          disabled={isLoading}
+        >
           キャンセル
         </Button>
       </div>

@@ -5,20 +5,13 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 }
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
-  (
-    {
-      error = false,
-      className = '',
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    const baseStyles = 'w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none text-gray-900';
+  ({ error = false, className = '', children, ...props }, ref) => {
+    const baseStyles =
+      'w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none text-gray-900';
     const stateStyles = error
       ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
       : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500';
-    
+
     return (
       <select
         ref={ref}
@@ -28,7 +21,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         {children}
       </select>
     );
-  }
+  },
 );
 
 Select.displayName = 'Select';

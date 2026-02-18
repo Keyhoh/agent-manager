@@ -16,9 +16,14 @@ export default function TaskDetailPage(props: {
 }) {
   const params = use(props.params);
   const router = useRouter();
-  const { data: task, isLoading, error } = useGetTasksByTaskIdQuery({ taskId: params.taskId });
+  const {
+    data: task,
+    isLoading,
+    error,
+  } = useGetTasksByTaskIdQuery({ taskId: params.taskId });
   const [updateTask, { isLoading: isUpdating }] = usePutTasksByTaskIdMutation();
-  const [deleteTask, { isLoading: isDeleting }] = useDeleteTasksByTaskIdMutation();
+  const [deleteTask, { isLoading: isDeleting }] =
+    useDeleteTasksByTaskIdMutation();
 
   const handleSubmit = async (data: UpdateTaskRequest) => {
     try {
@@ -60,7 +65,9 @@ export default function TaskDetailPage(props: {
   if (error || !task) {
     return (
       <main className="container mx-auto px-4 py-8">
-        <p className="text-red-600">バックログアイテムが見つかりませんでした。</p>
+        <p className="text-red-600">
+          バックログアイテムが見つかりませんでした。
+        </p>
       </main>
     );
   }

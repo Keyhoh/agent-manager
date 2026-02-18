@@ -11,10 +11,17 @@ interface UpdateProjectFormProps {
   isLoading?: boolean;
 }
 
-export function UpdateProjectForm({ project, onSubmit, onCancel, isLoading }: UpdateProjectFormProps) {
+export function UpdateProjectForm({
+  project,
+  onSubmit,
+  onCancel,
+  isLoading,
+}: UpdateProjectFormProps) {
   const [name, setName] = useState(project.name);
   const [description, setDescription] = useState(project.description);
-  const [status, setStatus] = useState<'ACTIVE' | 'ARCHIVED'>(project.status || 'ACTIVE');
+  const [status, setStatus] = useState<'ACTIVE' | 'ARCHIVED'>(
+    project.status || 'ACTIVE',
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +29,11 @@ export function UpdateProjectForm({ project, onSubmit, onCancel, isLoading }: Up
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4" aria-label="プロダクト編集フォーム">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4"
+      aria-label="プロダクト編集フォーム"
+    >
       <div>
         <Label htmlFor="name" required>
           プロダクト名
@@ -89,12 +100,7 @@ export function UpdateProjectForm({ project, onSubmit, onCancel, isLoading }: Up
         >
           キャンセル
         </Button>
-        <Button
-          type="submit"
-          variant="primary"
-          fullWidth
-          isLoading={isLoading}
-        >
+        <Button type="submit" variant="primary" fullWidth isLoading={isLoading}>
           更新
         </Button>
       </div>

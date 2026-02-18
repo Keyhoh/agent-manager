@@ -5,9 +5,15 @@ import { TaskCard } from '@/components/features/tasks';
 import { Button, Link, Spinner } from '@/components/core';
 import { use } from 'react';
 
-export default function BacklogPage(props: { params: Promise<{ id: string }> }) {
+export default function BacklogPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = use(props.params);
-  const { data: tasks, isLoading, error } = useGetProjectsByProjectIdBacklogQuery({ projectId: params.id });
+  const {
+    data: tasks,
+    isLoading,
+    error,
+  } = useGetProjectsByProjectIdBacklogQuery({ projectId: params.id });
 
   if (isLoading) {
     return (
@@ -20,7 +26,9 @@ export default function BacklogPage(props: { params: Promise<{ id: string }> }) 
   if (error) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <p className="text-red-600">エラーが発生しました。再読み込みしてください。</p>
+        <p className="text-red-600">
+          エラーが発生しました。再読み込みしてください。
+        </p>
       </div>
     );
   }
@@ -33,7 +41,10 @@ export default function BacklogPage(props: { params: Promise<{ id: string }> }) 
           <Link href={`/projects/${params.id}`} variant="secondary">
             プロダクトに戻る
           </Link>
-          <Link href={`/projects/${params.id}/backlog/tasks/new`} variant="primary">
+          <Link
+            href={`/projects/${params.id}/backlog/tasks/new`}
+            variant="primary"
+          >
             新規バックログアイテム作成
           </Link>
         </div>
@@ -41,8 +52,13 @@ export default function BacklogPage(props: { params: Promise<{ id: string }> }) 
 
       {tasks && tasks.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-500 mb-4">バックログアイテムがまだありません</p>
-          <Link href={`/projects/${params.id}/backlog/tasks/new`} variant="primary">
+          <p className="text-gray-500 mb-4">
+            バックログアイテムがまだありません
+          </p>
+          <Link
+            href={`/projects/${params.id}/backlog/tasks/new`}
+            variant="primary"
+          >
             最初のバックログアイテムを作成
           </Link>
         </div>

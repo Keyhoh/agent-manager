@@ -11,7 +11,10 @@ export function ProjectsListPage() {
     return (
       <div className="min-h-screen bg-gray-50 p-8">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4" role="alert">
+          <div
+            className="bg-red-50 border border-red-200 rounded-lg p-4"
+            role="alert"
+          >
             <p className="text-red-800">プロダクトの読み込みに失敗しました</p>
           </div>
         </div>
@@ -42,10 +45,7 @@ export function ProjectsListPage() {
         ) : projects && projects.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-              />
+              <ProjectCard key={project.id} project={project} />
             ))}
           </div>
         ) : (

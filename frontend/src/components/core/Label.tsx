@@ -6,15 +6,7 @@ interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
 }
 
 export const Label = forwardRef<HTMLLabelElement, LabelProps>(
-  (
-    {
-      required = false,
-      className = '',
-      children,
-      ...props
-    },
-    ref
-  ) => {
+  ({ required = false, className = '', children, ...props }, ref) => {
     return (
       <label
         ref={ref}
@@ -25,7 +17,7 @@ export const Label = forwardRef<HTMLLabelElement, LabelProps>(
         {required && <span aria-label="必須"> *</span>}
       </label>
     );
-  }
+  },
 );
 
 Label.displayName = 'Label';

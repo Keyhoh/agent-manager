@@ -31,7 +31,9 @@ const statusLabels: Record<string, string> = {
 };
 
 export function TaskCard({ task, projectId }: TaskCardProps) {
-  const priorityColor = task.priority ? priorityColors[task.priority] : 'bg-gray-100 text-gray-800';
+  const priorityColor = task.priority
+    ? priorityColors[task.priority]
+    : 'bg-gray-100 text-gray-800';
   const priorityLabel = task.priority ? priorityLabels[task.priority] : '不明';
   const statusLabel = task.status ? statusLabels[task.status] : '不明';
 
@@ -43,13 +45,17 @@ export function TaskCard({ task, projectId }: TaskCardProps) {
       >
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-semibold text-lg line-clamp-2">{task.title}</h3>
-          <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${priorityColor}`}>
+          <span
+            className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${priorityColor}`}
+          >
             {priorityLabel}
           </span>
         </div>
 
         {task.description && (
-          <p className="text-gray-600 text-sm line-clamp-3">{task.description}</p>
+          <p className="text-gray-600 text-sm line-clamp-3">
+            {task.description}
+          </p>
         )}
 
         <div className="flex items-center gap-4 text-sm text-gray-500">

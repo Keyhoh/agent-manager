@@ -10,7 +10,11 @@ interface CreateProjectFormProps {
   isLoading?: boolean;
 }
 
-export function CreateProjectForm({ onSubmit, onCancel, isLoading }: CreateProjectFormProps) {
+export function CreateProjectForm({
+  onSubmit,
+  onCancel,
+  isLoading,
+}: CreateProjectFormProps) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [repositoryUrl, setRepositoryUrl] = useState('');
@@ -21,7 +25,11 @@ export function CreateProjectForm({ onSubmit, onCancel, isLoading }: CreateProje
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4" aria-label="プロダクト作成フォーム">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4"
+      aria-label="プロダクト作成フォーム"
+    >
       <div>
         <Label htmlFor="name" required>
           プロダクト名
@@ -88,12 +96,7 @@ export function CreateProjectForm({ onSubmit, onCancel, isLoading }: CreateProje
         >
           キャンセル
         </Button>
-        <Button
-          type="submit"
-          variant="primary"
-          fullWidth
-          isLoading={isLoading}
-        >
+        <Button type="submit" variant="primary" fullWidth isLoading={isLoading}>
           作成
         </Button>
       </div>

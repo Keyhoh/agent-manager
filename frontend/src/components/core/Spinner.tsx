@@ -21,16 +21,16 @@ const colorStyles: Record<SpinnerColor, string> = {
   white: 'border-white',
 };
 
-export function Spinner({ 
-  size = 'md', 
+export function Spinner({
+  size = 'md',
   color = 'primary',
   label = '読み込み中...',
   className = '',
-  ...props 
+  ...props
 }: SpinnerProps) {
   return (
-    <div 
-      role="status" 
+    <div
+      role="status"
       aria-live="polite"
       className={`flex justify-center items-center ${className}`}
       {...props}

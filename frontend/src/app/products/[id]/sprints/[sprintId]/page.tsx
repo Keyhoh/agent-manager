@@ -17,9 +17,16 @@ export default function SprintDetailPage(props: {
 }) {
   const params = use(props.params);
   const router = useRouter();
-  const { data: sprint, isLoading, error } = useGetSprintsBySprintIdQuery({ sprintId: params.sprintId });
-  const { data: tasks } = useGetSprintsBySprintIdTasksQuery({ sprintId: params.sprintId });
-  const [updateSprint, { isLoading: isUpdating }] = usePutSprintsBySprintIdMutation();
+  const {
+    data: sprint,
+    isLoading,
+    error,
+  } = useGetSprintsBySprintIdQuery({ sprintId: params.sprintId });
+  const { data: tasks } = useGetSprintsBySprintIdTasksQuery({
+    sprintId: params.sprintId,
+  });
+  const [updateSprint, { isLoading: isUpdating }] =
+    usePutSprintsBySprintIdMutation();
 
   const handleSubmit = async (data: UpdateSprintRequest) => {
     try {
@@ -71,7 +78,9 @@ export default function SprintDetailPage(props: {
               name: sprint.name,
               goal: sprint.goal,
               status: sprint.status,
-              endDate: sprint.endDate ? new Date(sprint.endDate).toISOString().split('T')[0] : undefined,
+              endDate: sprint.endDate
+                ? new Date(sprint.endDate).toISOString().split('T')[0]
+                : undefined,
             }}
             onSubmit={handleSubmit}
             onCancel={handleCancel}
