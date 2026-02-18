@@ -9,7 +9,7 @@
     "lint": "eslint",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
-    "openapi:generate": "npx @rtk-query/codegen-openapi openapi-config.ts"
+    "openapi:generate": "npx @rtk-query/codegen-openapi openapi-config.js"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",

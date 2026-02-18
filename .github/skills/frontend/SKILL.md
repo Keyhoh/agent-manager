@@ -18,7 +18,6 @@ frontend/
 |   |   ├── layouts/         # レイアウトコンポーネント
 |   |   └── pages/          # ページコンポーネント（ビジネスロジックを含む）
 │   ├── app/             # App Router（ルーティングのみ、ページコンポーネントをimport/exportするのみ）
-│   ├── services/        # API通信（RTK Query）
 │   ├── hooks/           # カスタムフック
 │   ├── context/         # グローバルステート管理
 │   ├── styles/          # CSSやスタイル関連
@@ -63,7 +62,7 @@ export default function ProjectsPage() {
 - **`components/pages/`**: ページレベルのコンポーネント。ビジネスロジック、hooks、状態管理を含む
 - **`components/features/`**: 機能単位の再利用可能なコンポーネント
 - **`components/core/`**: プロジェクト全体で使用する基本的なUIコンポーネント
-- **`services/`**: API通信（RTK Query生成コード）
+- **`libs/api.ts`**: API通信（RTK Query生成コード）
 - **`store/`**: Redux store設定
 
 ### ファイル構成例
@@ -114,7 +113,7 @@ src/
    npm install --save-dev @rtk-query/codegen-openapi
    ```
 
-2. **ベースAPIの作成** (`src/services/emptyApi.ts`)
+2. **ベースAPIの作成** (`src/libs/emptyApi.ts`)
    ```typescript
    import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
@@ -132,9 +131,9 @@ src/
    ```javascript
    const config = {
      schemaFile: '../openapi.yaml',
-     apiFile: './src/services/emptyApi.ts',
+     apiFile: './src/libs/emptyApi.ts',
      apiImport: 'emptySplitApi',
-     outputFile: './src/services/api.ts',
+     outputFile: './src/libs/api.ts',
      exportName: 'api',
      hooks: true,
      tag: true,
@@ -151,7 +150,7 @@ src/
 5. **Reduxストアの設定** (`src/store/store.ts`)
    ```typescript
    import { configureStore } from '@reduxjs/toolkit';
-   import { api } from '@/services/api';
+   import { api } from '@/libs/api';
 
    export const store = configureStore({
      reducer: {
@@ -169,8 +168,8 @@ src/
      usePostProductsMutation,
      usePutProductsByProductIdMutation,
      useDeleteProductsByProductIdMutation,
-   } from '@/services/api';
-   import type { Product, CreateProductRequest } from '@/services/api';
+   } from '@/libs/api';
+   import type { Product, CreateProductRequest } from '@/libs/api';
 
    export default function ProductsPage() {
      const { data: products, isLoading, error } = useGetProductsQuery();

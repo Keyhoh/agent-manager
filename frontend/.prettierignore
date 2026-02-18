@@ -7,7 +7,7 @@ node_modules
 
 # Ignore all generated files
 *.generated.*
-src/services/emptyApi.ts
+src/libs/emptyApi.ts
 
 # Ignore configuration files
 next-env.d.ts

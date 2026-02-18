@@ -1,25 +1,21 @@
 'use client';
 
 import { use, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import {
   useGetSprintsBySprintIdQuery,
-  usePutSprintsBySprintIdMutation,
   useGetSprintsBySprintIdBacklogItemsQuery,
   useGetReviewsQuery,
   usePostReviewsMutation,
 } from '@/libs/api';
-import { SprintForm } from '@/components/features/sprints';
 import { BacklogItemCard } from '@/components/features/backlog-items';
 import { ReviewForm, ReviewCard } from '@/components/features/reviews';
 import { Button, Link, Spinner } from '@/components/core';
-import type { UpdateSprintRequest, CreateReviewRequest } from '@/libs/api';
+import type { CreateReviewRequest } from '@/libs/api';
 
 export default function SprintDetailPage(props: {
   params: Promise<{ id: string; sprintId: string }>;
 }) {
   const params = use(props.params);
-  const router = useRouter();
   const [showReviewForm, setShowReviewForm] = useState(false);
 
   const {
@@ -31,22 +27,8 @@ export default function SprintDetailPage(props: {
     sprintId: params.sprintId,
   });
   const { data: reviews } = useGetReviewsQuery({ sprintId: params.sprintId });
-  const [updateSprint, { isLoading: isUpdating }] =
-    usePutSprintsBySprintIdMutation();
   const [createReview, { isLoading: isCreatingReview }] =
     usePostReviewsMutation();
-
-  const handleSubmit = async (data: UpdateSprintRequest) => {
-    try {
-      await updateSprint({
-        sprintId: params.sprintId,
-        updateSprintRequest: data,
-      }).unwrap();
-      router.push(`/products/${params.id}/sprints`);
-    } catch (error) {
-      console.error('Failed to update sprint:', error);
-    }
-  };
 
   const handleReviewSubmit = async (data: CreateReviewRequest) => {
     try {
@@ -55,10 +37,6 @@ export default function SprintDetailPage(props: {
     } catch (error) {
       console.error('Failed to create review:', error);
     }
-  };
-
-  const handleCancel = () => {
-    router.back();
   };
 
   if (isLoading) {
@@ -90,20 +68,30 @@ export default function SprintDetailPage(props: {
         <section className="lg:col-span-2 space-y-8">
           <div>
             <h2 className="text-xl font-semibold mb-4">スプリント情報</h2>
-            <SprintForm
-              productId={params.id}
-              initialData={{
-                name: sprint.name,
-                goal: sprint.goal,
-                status: sprint.status,
-                endDate: sprint.endDate
-                  ? new Date(sprint.endDate).toISOString().split('T')[0]
-                  : undefined,
-              }}
-              onSubmit={handleSubmit}
-              onCancel={handleCancel}
-              isLoading={isUpdating}
-            />
+            <div className="bg-white border border-gray-200 rounded-lg p-6 space-y-4">
+              <div>
+                <p className="text-sm font-medium text-gray-500">
+                  スプリント名
+                </p>
+                <p className="text-lg">{sprint.name}</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500">ゴール</p>
+                <p className="text-lg">{sprint.goal || '未設定'}</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-500">ステータス</p>
+                <p className="text-lg">{sprint.status}</p>
+              </div>
+              {sprint.endDate && (
+                <div>
+                  <p className="text-sm font-medium text-gray-500">終了日</p>
+                  <p className="text-lg">
+                    {new Date(sprint.endDate).toLocaleDateString('ja-JP')}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
 
           <div>

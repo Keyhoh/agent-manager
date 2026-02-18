@@ -37,14 +37,9 @@ export default function BacklogPage(props: {
     <main className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">バックログ</h1>
-        <div className="flex gap-4">
-          <Link href={`/products/${params.id}`} variant="secondary">
-            プロダクトに戻る
-          </Link>
-          <Link href={`/products/${params.id}/backlogs/new`} variant="primary">
-            新規バックログアイテム作成
-          </Link>
-        </div>
+        <Link href={`/products/${params.id}`} variant="secondary">
+          プロダクトに戻る
+        </Link>
       </div>
 
       {backlogItems && backlogItems.length === 0 ? (
@@ -52,9 +47,6 @@ export default function BacklogPage(props: {
           <p className="text-gray-500 mb-4">
             バックログアイテムがまだありません
           </p>
-          <Link href={`/products/${params.id}/backlogs/new`} variant="primary">
-            最初のバックログアイテムを作成
-          </Link>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

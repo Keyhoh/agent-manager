@@ -37,22 +37,14 @@ export default function SprintsPage(props: {
     <main className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">スプリント一覧</h1>
-        <div className="flex gap-4">
-          <Link href={`/products/${params.id}`} variant="secondary">
-            プロダクトに戻る
-          </Link>
-          <Link href={`/products/${params.id}/sprints/new`} variant="primary">
-            新規スプリント作成
-          </Link>
-        </div>
+        <Link href={`/products/${params.id}`} variant="secondary">
+          プロダクトに戻る
+        </Link>
       </div>
 
       {sprints && sprints.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-gray-500 mb-4">スプリントがまだありません</p>
-          <Link href={`/products/${params.id}/sprints/new`} variant="primary">
-            最初のスプリントを作成
-          </Link>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

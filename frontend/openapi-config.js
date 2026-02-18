@@ -1,8 +1,8 @@
 const config = {
   schemaFile: '../openapi.yaml',
-  apiFile: './src/services/emptyApi.ts',
+  apiFile: './src/libs/emptyApi.ts',
   apiImport: 'emptySplitApi',
-  outputFile: './src/services/api.ts',
+  outputFile: './src/libs/api.ts',
   exportName: 'api',
   hooks: true,
   tag: true,
