@@ -425,6 +425,26 @@ paths:
                 $ref: '#/components/schemas/Agent'
 
   /reviews:
+    get:
+      tags:
+        - Reviews
+      summary: レビュー一覧取得
+      parameters:
+        - name: sprintId
+          in: query
+          required: false
+          schema:
+            type: string
+          description: スプリントIDでフィルタ
+      responses:
+        '200':
+          description: レビュー一覧
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
     post:
       tags:
         - Reviews
