@@ -1,4 +1,7 @@
-import { BacklogItemPriority, BacklogItemStatus } from '../../../domain/model/backlog-item.entity';
+import {
+  BacklogItemPriority,
+  BacklogItemStatus,
+} from '@/domain/model/backlog-item.entity';
 
 export class BacklogItemResponse {
   id: string;

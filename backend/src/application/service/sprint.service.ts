@@ -1,9 +1,9 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { Sprint } from '../../domain/model/sprint.entity';
+import { Sprint } from '@/domain/model/sprint.entity';
 import {
   type SprintRepository,
   SPRINT_REPOSITORY,
-} from '../../domain/repository/sprint.repository';
+} from '@/domain/repository/sprint.repository';
 
 /**
  * SprintService: 機能的凝集

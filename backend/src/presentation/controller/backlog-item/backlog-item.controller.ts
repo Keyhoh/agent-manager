@@ -10,12 +10,12 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { BacklogItemStatus, BacklogItemPriority } from '../../../domain/model/backlog-item.entity';
-import { BacklogItemService } from '../../../application/service/backlog-item.service';
+import { BacklogItemStatus } from '@/domain/model/backlog-item.entity';
+import { BacklogItemService } from '@/application/service/backlog-item.service';
 import { CreateBacklogItemRequest } from './create-backlog-item.request';
 import { BacklogItemResponse } from './backlog-item.response';
 import { UpdateBacklogItemRequest } from './update-backlog-item.request';
-import { BacklogItem } from '../../../domain/model/backlog-item.entity';
+import { BacklogItem } from '@/domain/model/backlog-item.entity';
 
 @Controller('api/backlog-items')
 export class BacklogItemController {
@@ -34,7 +34,10 @@ export class BacklogItemController {
     } else if (sprintId) {
       backlogItems = await this.backlogItemService.findBySprintId(sprintId);
     } else if (parentBacklogItemId) {
-      backlogItems = await this.backlogItemService.findByParentBacklogItemId(parentBacklogItemId);
+      backlogItems =
+        await this.backlogItemService.findByParentBacklogItemId(
+          parentBacklogItemId,
+        );
     } else {
       backlogItems = await this.backlogItemService.findAll();
     }
@@ -78,7 +81,9 @@ export class BacklogItemController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() dto: CreateBacklogItemRequest): Promise<BacklogItemResponse> {
+  async create(
+    @Body() dto: CreateBacklogItemRequest,
+  ): Promise<BacklogItemResponse> {
     const backlogItem = BacklogItem.create({
       productId: dto.productId,
       sprintId: dto.sprintId ?? null,

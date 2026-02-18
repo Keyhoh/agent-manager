@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { BacklogItem, BacklogItemStatus, BacklogItemPriority } from '../../../domain/model/backlog-item.entity';
-import { BacklogItemRepository } from '../../../domain/repository/backlog-item.repository';
+import {
+  BacklogItem,
+  BacklogItemStatus,
+  BacklogItemPriority,
+} from '@/domain/model/backlog-item.entity';
+import { BacklogItemRepository } from '@/domain/repository/backlog-item.repository';
 import { PrismaService } from './prisma.service';
 
 @Injectable()
@@ -107,7 +111,9 @@ export class PrismaBacklogItemRepository implements BacklogItemRepository {
     );
   }
 
-  async findByParentBacklogItemId(parentBacklogItemId: string): Promise<BacklogItem[]> {
+  async findByParentBacklogItemId(
+    parentBacklogItemId: string,
+  ): Promise<BacklogItem[]> {
     const backlogItems = await this.prisma.backlogItem.findMany({
       where: { parentBacklogItemId },
       orderBy: { createdAt: 'desc' },

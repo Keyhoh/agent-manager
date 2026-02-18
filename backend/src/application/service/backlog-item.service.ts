@@ -1,9 +1,9 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { BacklogItem } from '../../domain/model/backlog-item.entity';
+import { BacklogItem } from '@/domain/model/backlog-item.entity';
 import {
   type BacklogItemRepository,
   BACKLOG_ITEM_REPOSITORY,
-} from '../../domain/repository/backlog-item.repository';
+} from '@/domain/repository/backlog-item.repository';
 
 /**
  * BacklogItemService: 機能的凝集
@@ -40,8 +40,12 @@ export class BacklogItemService {
     return this.backlogItemRepository.findBySprintId(sprintId);
   }
 
-  async findByParentBacklogItemId(parentBacklogItemId: string): Promise<BacklogItem[]> {
-    return this.backlogItemRepository.findByParentBacklogItemId(parentBacklogItemId);
+  async findByParentBacklogItemId(
+    parentBacklogItemId: string,
+  ): Promise<BacklogItem[]> {
+    return this.backlogItemRepository.findByParentBacklogItemId(
+      parentBacklogItemId,
+    );
   }
 
   async update(backlogItem: BacklogItem): Promise<BacklogItem> {

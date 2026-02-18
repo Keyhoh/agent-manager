@@ -1,9 +1,9 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { Product } from '../../domain/model/product.entity';
+import { Product } from '@/domain/model/product.entity';
 import {
   type ProductRepository,
   PRODUCT_REPOSITORY,
-} from '../../domain/repository/product.repository';
+} from '@/domain/repository/product.repository';
 
 /**
  * ProductService: 機能的凝集

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Sprint, SprintStatus } from '../../../domain/model/sprint.entity';
-import { SprintRepository } from '../../../domain/repository/sprint.repository';
+import { Sprint, SprintStatus } from '@/domain/model/sprint.entity';
+import { SprintRepository } from '@/domain/repository/sprint.repository';
 import { PrismaService } from './prisma.service';
 
 @Injectable()

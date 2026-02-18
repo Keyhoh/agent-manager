@@ -6,7 +6,7 @@ import {
   IsDateString,
   IsUUID,
 } from 'class-validator';
-import { SprintStatus } from '../../../domain/model/sprint.entity';
+import { SprintStatus } from '@/domain/model/sprint.entity';
 
 export class CreateSprintRequest {
   @IsUUID()

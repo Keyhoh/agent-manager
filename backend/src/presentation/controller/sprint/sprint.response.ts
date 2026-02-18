@@ -1,4 +1,4 @@
-import { SprintStatus } from '../../../domain/model/sprint.entity';
+import { SprintStatus } from '@/domain/model/sprint.entity';
 
 export class SprintResponse {
   id: string;

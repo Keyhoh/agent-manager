@@ -1,4 +1,4 @@
-import { ProductStatus } from '../../../domain/model/product.entity';
+import { ProductStatus } from '@/domain/model/product.entity';
 
 export class ProductResponse {
   id: string;

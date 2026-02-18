@@ -10,12 +10,12 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { SprintStatus } from '../../../domain/model/sprint.entity';
-import { SprintService } from '../../../application/service/sprint.service';
+import { SprintStatus } from '@/domain/model/sprint.entity';
+import { SprintService } from '@/application/service/sprint.service';
 import { CreateSprintRequest } from './create-sprint.request';
 import { SprintResponse } from './sprint.response';
 import { UpdateSprintRequest } from './update-sprint.request';
-import { Sprint } from '../../../domain/model/sprint.entity';
+import { Sprint } from '@/domain/model/sprint.entity';
 
 @Controller('api/sprints')
 export class SprintController {
@@ -103,10 +103,10 @@ export class SprintController {
       if (dto.status === SprintStatus.ACTIVE) {
         const startDate = dto.startDate
           ? new Date(dto.startDate)
-          : sprint.startDate ?? new Date();
+          : (sprint.startDate ?? new Date());
         const endDate = dto.endDate
           ? new Date(dto.endDate)
-          : sprint.endDate ?? new Date();
+          : (sprint.endDate ?? new Date());
         sprint = sprint.start(startDate, endDate);
       } else if (dto.status === SprintStatus.COMPLETED) {
         sprint = sprint.complete();

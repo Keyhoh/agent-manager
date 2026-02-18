@@ -5,7 +5,10 @@ import {
   IsNumber,
   IsUUID,
 } from 'class-validator';
-import { BacklogItemPriority, BacklogItemStatus } from '../../../domain/model/backlog-item.entity';
+import {
+  BacklogItemPriority,
+  BacklogItemStatus,
+} from '@/domain/model/backlog-item.entity';
 
 export class UpdateBacklogItemRequest {
   @IsUUID()

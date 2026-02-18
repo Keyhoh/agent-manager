@@ -9,12 +9,12 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ProductStatus } from '../../../domain/model/product.entity';
-import { ProductService } from '../../../application/service/product.service';
+import { ProductStatus } from '@/domain/model/product.entity';
+import { ProductService } from '@/application/service/product.service';
 import { CreateProductRequest } from './create-product.request';
 import { ProductResponse } from './product.response';
 import { UpdateProductRequest } from './update-product.request';
-import { Product } from '../../../domain/model/product.entity';
+import { Product } from '@/domain/model/product.entity';
 
 @Controller('api/products')
 export class ProductController {

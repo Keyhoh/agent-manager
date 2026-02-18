@@ -1,10 +1,5 @@
-import {
-  IsOptional,
-  IsString,
-  IsEnum,
-  IsDateString,
-} from 'class-validator';
-import { SprintStatus } from '../../../domain/model/sprint.entity';
+import { IsOptional, IsString, IsEnum, IsDateString } from 'class-validator';
+import { SprintStatus } from '@/domain/model/sprint.entity';
 
 export class UpdateSprintRequest {
   @IsString()
