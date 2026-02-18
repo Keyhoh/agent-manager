@@ -9,7 +9,25 @@ Agent Managerは、AIエージェントを活用してスクラム開発プロ�
 
 **重要**: 実装を開始する前に、必ず以下の手順を実行してください。
 
-### 1. SKILL.mdの確認（必須）
+### 1. 公式ドキュメントの確認（必須）
+
+**実装前に必ず最新の公式ドキュメントを参照してください。**
+
+使用する技術・ライブラリの最新の公式ドキュメントを確認し、以下の点を把握してください：
+
+- 最新のベストプラクティス
+- APIの使用方法と変更点
+- 非推奨機能の確認
+- セキュリティに関する推奨事項
+
+**例**:
+- Next.js実装時: https://nextjs.org/docs
+- Prisma実装時: https://www.prisma.io/docs
+- NestJS実装時: https://docs.nestjs.com
+- Prettier設定時: https://prettier.io/docs
+- その他ライブラリ: 各公式サイトのドキュメント
+
+### 2. SKILL.mdの確認（必須）
 
 実装対象に応じて該当するSKILL.mdを読み、技術スタック、命名規則、コーディング規約を把握してください：
 
@@ -23,7 +41,7 @@ Agent Managerは、AIエージェントを活用してスクラム開発プロ�
 - フォルダ構成とモジュール構成
 - コーディング規約とベストプラクティス
 
-### 2. 仕様書の確認
+### 3. 仕様書の確認
 
 `specification/`配下のドキュメントで要件を理解してください：
 
@@ -32,7 +50,7 @@ Agent Managerは、AIエージェントを活用してスクラム開発プロ�
 - `task_management.md`: タスク管理の詳細
 - `workflow.md`: ワークフロー定義
 
-### 3. MCP Serverの確認
+### 4. MCP Serverの確認
 
 `.vscode/mcp.json`を確認し、利用可能なMCP Serverを把握してください。
 
@@ -40,11 +58,74 @@ Agent Managerは、AIエージェントを活用してスクラム開発プロ�
 - `git`: Git操作（mcp-server-git）
 - `github`: GitHub操作（GitHub Copilot MCP）
 
-### 4. 実装
+### 5. 実装
 
-SKILL.mdの規約に従って実装してください。
+SKILL.mdの規約と公式ドキュメントのベストプラクティスに従って実装してください。
 
-### 5. ドキュメントの更新
+### 6. コミット（必須）
+
+**作業は必ず適切な粒度でコミットしてください。**
+
+#### コミット粒度の原則
+
+1. **論理的な単位で分割**: 1つのコミットは1つの論理的な変更を表す
+2. **独立性**: 各コミットは独立してレビュー・理解できる
+3. **ロールバック可能**: 必要に応じて個別にrevertできる
+
+#### コミットの分割例
+
+❌ **悪い例**: すべての変更を1つのコミットにまとめる
+```
+feat: add user management feature
+```
+
+✅ **良い例**: 論理的な単位で分割
+```
+1. refactor: extract user validation logic
+2. feat: add user repository interface
+3. feat: implement user repository with Prisma
+4. feat: add user service layer
+5. feat: add user controller endpoints
+6. test: add user service unit tests
+7. docs: update API documentation for user endpoints
+```
+
+#### コミットメッセージの規約
+
+Conventional Commitsに従ってください：
+
+- `feat`: 新機能
+- `fix`: バグ修正
+- `refactor`: リファクタリング
+- `style`: コードスタイルの変更（フォーマット、セミコロンなど）
+- `docs`: ドキュメントのみの変更
+- `test`: テストの追加・修正
+- `chore`: ビルドプロセスやツールの変更
+
+**フォーマット**:
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+**例**:
+```
+feat(backend): add user authentication
+
+Implement JWT-based authentication with refresh tokens.
+
+Changes:
+- Add AuthService for token generation
+- Add AuthGuard for route protection
+- Add JWT configuration in environment variables
+
+Closes #123
+```
+
+### 7. ドキュメントの更新
 
 実装中に新しいパターンや規約を発見した場合は、以下を更新してください：
 - 新しい技術パターン → SKILL.mdに追記
@@ -96,13 +177,49 @@ SKILL.mdの規約に従って実装してください。
 
 ### NPM Packages
 
-- 開発に必要なNPMパッケージを適宜追加してください。例：axios、react-router-dom、reduxなど。
-- 追加する前に以下の点を確認してください：
-  - パッケージのメンテナンス状況
-  - セキュリティリスク
-  - プロジェクトのニーズに合致しているか
-  - ライセンス
-- 使用する際は必ず最新の公式ドキュメントとソースコードを確認してください。
+**重要: NPMパッケージを使用する際は、必ず最新の公式ドキュメントとソースコードを確認してください。**
+
+開発に必要なNPMパッケージを適宜追加できます。例：axios、react-router-dom、reduxなど。
+
+#### パッケージ追加前のチェックリスト
+
+1. **公式ドキュメントの確認** ✅ 必須
+   - 最新の公式ドキュメントを読む
+   - インストール方法を確認
+   - 推奨される使用方法を把握
+   - ベストプラクティスを理解
+
+2. **パッケージの評価**
+   - パッケージのメンテナンス状況（最終更新日、Issue対応状況）
+   - セキュリティリスク（npm auditで確認）
+   - プロジェクトのニーズに合致しているか
+   - ライセンス（MIT、Apache 2.0など）
+   - ダウンロード数とGitHubスター数
+
+3. **公式情報源の確認**
+   - 公式サイト
+   - GitHub Repository（README、CHANGELOG）
+   - 公式ドキュメントサイト
+   - 公式サンプルコード
+
+#### パッケージ使用時の注意事項
+
+- **常に最新の公式ドキュメントを参照**: 古い記事やStack Overflowの情報ではなく、公式ドキュメントを優先
+- **バージョンの確認**: メジャーバージョン間で破壊的変更がある可能性を考慮
+- **型定義の確認**: TypeScriptの場合、@types/パッケージの必要性を確認
+- **依存関係の確認**: 追加される依存パッケージを確認
+
+#### よく使用されるパッケージの公式ドキュメント
+
+- **Prisma**: https://www.prisma.io/docs
+- **NestJS**: https://docs.nestjs.com
+- **Next.js**: https://nextjs.org/docs
+- **React**: https://react.dev
+- **Redux Toolkit**: https://redux-toolkit.js.org
+- **Axios**: https://axios-http.com/docs/intro
+- **Jest**: https://jestjs.io/docs/getting-started
+- **Prettier**: https://prettier.io/docs
+- **ESLint**: https://eslint.org/docs/latest
 
 ## Additional
 
