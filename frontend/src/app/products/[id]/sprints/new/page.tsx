@@ -20,7 +20,7 @@ export default function NewSprintPage(props: {
       await createSprint({
         createSprintRequest: data as CreateSprintRequest,
       }).unwrap();
-      router.push(`/projects/${params.id}/sprints`);
+      router.push(`/products/${params.id}/sprints`);
     } catch (error) {
       console.error('Failed to create sprint:', error);
     }
@@ -34,7 +34,7 @@ export default function NewSprintPage(props: {
     <main className="container mx-auto px-4 py-8 max-w-2xl">
       <h1 className="text-3xl font-bold mb-8">新規スプリント作成</h1>
       <SprintForm
-        projectId={params.id}
+        productId={params.id}
         onSubmit={handleSubmit}
         onCancel={handleCancel}
         isLoading={isLoading}

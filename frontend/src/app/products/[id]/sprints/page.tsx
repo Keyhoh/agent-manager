@@ -13,7 +13,7 @@ export default function SprintsPage(props: {
     data: sprints,
     isLoading,
     error,
-  } = useGetSprintsQuery({ projectId: params.id });
+  } = useGetSprintsQuery({ productId: params.id });
 
   if (isLoading) {
     return (
@@ -38,10 +38,10 @@ export default function SprintsPage(props: {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">スプリント一覧</h1>
         <div className="flex gap-4">
-          <Link href={`/projects/${params.id}`} variant="secondary">
-            プロジェクトに戻る
+          <Link href={`/products/${params.id}`} variant="secondary">
+            プロダクトに戻る
           </Link>
-          <Link href={`/projects/${params.id}/sprints/new`} variant="primary">
+          <Link href={`/products/${params.id}/sprints/new`} variant="primary">
             新規スプリント作成
           </Link>
         </div>
@@ -50,14 +50,14 @@ export default function SprintsPage(props: {
       {sprints && sprints.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-gray-500 mb-4">スプリントがまだありません</p>
-          <Link href={`/projects/${params.id}/sprints/new`} variant="primary">
+          <Link href={`/products/${params.id}/sprints/new`} variant="primary">
             最初のスプリントを作成
           </Link>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {sprints?.map((sprint) => (
-            <SprintCard key={sprint.id} sprint={sprint} projectId={params.id} />
+            <SprintCard key={sprint.id} sprint={sprint} productId={params.id} />
           ))}
         </div>
       )}

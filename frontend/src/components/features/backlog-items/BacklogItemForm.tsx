@@ -50,10 +50,10 @@ export function BacklogItemForm({
   const [description, setDescription] = useState(
     initialData?.description ?? '',
   );
-  const [priority, setPriority] = useState<CreateTaskRequest['priority']>(
+  const [priority, setPriority] = useState<CreateBacklogItemRequest['priority']>(
     initialData?.priority ?? 'MEDIUM',
   );
-  const [status, setStatus] = useState<UpdateTaskRequest['status']>(
+  const [status, setStatus] = useState<UpdateBacklogItemRequest['status']>(
     initialData?.status ?? 'BACKLOG',
   );
   const [storyPoint, setStoryPoint] = useState(
@@ -137,7 +137,7 @@ export function BacklogItemForm({
           id="priority"
           value={priority ?? ''}
           onChange={(e) =>
-            setPriority(e.target.value as CreateTaskRequest['priority'])
+            setPriority(e.target.value as CreateBacklogItemRequest['priority'])
           }
           disabled={isLoading}
         >
@@ -156,7 +156,7 @@ export function BacklogItemForm({
             id="status"
             value={status ?? ''}
             onChange={(e) =>
-              setStatus(e.target.value as UpdateTaskRequest['status'])
+              setStatus(e.target.value as UpdateBacklogItemRequest['status'])
             }
             disabled={isLoading}
           >

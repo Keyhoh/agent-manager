@@ -58,10 +58,10 @@ export function ProductCard({ product }: ProductCardProps) {
             )}
 
             <div className="text-xs text-gray-500">
-              <time dateTime={project.updatedAt}>
+              <time dateTime={product.updatedAt}>
                 更新日:{' '}
-                {project.updatedAt
-                  ? new Date(project.updatedAt).toLocaleDateString('ja-JP')
+                {product.updatedAt
+                  ? new Date(product.updatedAt).toLocaleDateString('ja-JP')
                   : '-'}
               </time>
             </div>

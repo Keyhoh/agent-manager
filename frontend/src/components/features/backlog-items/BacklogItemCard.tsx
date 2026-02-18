@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Task as BacklogItem } from '@/libs/api';
+import { BacklogItem } from '@/libs/api';
 
 interface BacklogItemCardProps {
   backlogItem: BacklogItem;
