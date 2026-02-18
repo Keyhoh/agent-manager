@@ -11,14 +11,19 @@ import {
 } from '@nestjs/common';
 import { ProductStatus } from '@/domain/model/product.entity';
 import { ProductService } from '@/application/service/product.service';
+import { BacklogItemService } from '@/application/service/backlog-item.service';
 import { CreateProductRequest } from './create-product.request';
 import { ProductResponse } from './product.response';
 import { UpdateProductRequest } from './update-product.request';
 import { Product } from '@/domain/model/product.entity';
+import { BacklogItemResponse } from '../backlog-item/backlog-item.response';
 
 @Controller('api/products')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(
+    private readonly productService: ProductService,
+    private readonly backlogItemService: BacklogItemService,
+  ) {}
 
   @Get()
   async findAll(): Promise<ProductResponse[]> {
@@ -110,5 +115,28 @@ export class ProductController {
   async delete(@Param('id') id: string): Promise<void> {
     await this.productService.findById(id); // 存在確認
     await this.productService.delete(id);
+  }
+
+  @Get(':productId/backlog')
+  async getBacklog(
+    @Param('productId') productId: string,
+  ): Promise<BacklogItemResponse[]> {
+    const backlogItems =
+      await this.backlogItemService.findByProductId(productId);
+    return backlogItems.map((b) => ({
+      id: b.id,
+      productId: b.productId,
+      sprintId: b.sprintId,
+      parentBacklogItemId: b.parentBacklogItemId,
+      title: b.title,
+      description: b.description,
+      priority: b.priority,
+      status: b.status,
+      assignedAgentId: b.assignedAgentId,
+      storyPoint: b.storyPoint,
+      artifactPath: b.artifactPath,
+      createdAt: b.createdAt,
+      updatedAt: b.updatedAt,
+    }));
   }
 }
