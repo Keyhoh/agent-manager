@@ -1,0 +1,16 @@
+# Ignore artifacts:
+build
+coverage
+.next
+out
+node_modules
+
+# Ignore all generated files
+*.generated.*
+src/services/emptyApi.ts
+
+# Ignore configuration files
+next-env.d.ts
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
