@@ -54,7 +54,7 @@ Agent Managerは、AIエージェントを活用してスクラム開発プロ�
 
 - `overview.md`: システム全体の概要
 - `roles.md`: 役割定義
-- `task_management.md`: タスク管理の詳細
+- `task_management.md`: バックログアイテム管理の詳細
 - `workflow.md`: ワークフロー定義
 
 ### 4. MCP Serverの確認
@@ -138,7 +138,7 @@ Closes #123
 - 新しい技術パターン → SKILL.mdに追記
 - 新しいMCP Server → `.vscode/mcp.json`に追加してAGENTS.mdに記載
 
-## Project Architecture
+## Application Architecture
 
 ### Backend
 
@@ -159,7 +159,7 @@ Closes #123
 #### 命名規則
 
 - **DTOファイル**: `*.request.ts`, `*.response.ts` (※ `*.dto.ts`は使用しない)
-- **Repository実装**: `*.[技術名].repository.ts` (例: `project.prisma.repository.ts`)
+- **Repository実装**: `*.[技術名].repository.ts` (例: `product.prisma.repository.ts`)
 - **Controller構成**: `presentation/controller/[entity]/`フォルダ配下に関連ファイルを集約
   ```
   [entity]/

@@ -17,10 +17,10 @@ export function UpdateProductForm({
   onCancel,
   isLoading,
 }: UpdateProductFormProps) {
-  const [name, setName] = useState(project.name);
-  const [description, setDescription] = useState(project.description);
+  const [name, setName] = useState(product.name);
+  const [description, setDescription] = useState(product.description);
   const [status, setStatus] = useState<'ACTIVE' | 'ARCHIVED'>(
-    project.status || 'ACTIVE',
+    product.status || 'ACTIVE',
   );
 
   const handleSubmit = (e: React.FormEvent) => {

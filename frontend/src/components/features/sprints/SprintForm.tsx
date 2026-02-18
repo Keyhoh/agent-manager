@@ -5,7 +5,7 @@ import { Button, Input, TextArea, Label, Select } from '@/components/core';
 import type { CreateSprintRequest, UpdateSprintRequest } from '@/libs/api';
 
 interface SprintFormProps {
-  projectId: string;
+  productId: string;
   initialData?: UpdateSprintRequest & { id?: string };
   onSubmit: (
     data: CreateSprintRequest | UpdateSprintRequest,
@@ -24,7 +24,7 @@ const statusOptions: Array<{
 ];
 
 export function SprintForm({
-  projectId,
+  productId,
   initialData,
   onSubmit,
   onCancel,
@@ -62,7 +62,7 @@ export function SprintForm({
           endDate: startDate || undefined,
         }
       : {
-          projectId,
+          productId,
           name,
           goal,
           startDate: startDate || undefined,

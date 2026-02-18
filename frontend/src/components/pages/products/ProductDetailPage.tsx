@@ -36,8 +36,8 @@ export function ProductDetailPage() {
 
   const handleDelete = async () => {
     if (
-      !project?.name ||
-      !window.confirm(`「${project.name}」を削除してもよろしいですか？`)
+      !product?.name ||
+      !window.confirm(`「${product.name}」を削除してもよろしいですか？`)
     ) {
       return;
     }
@@ -50,7 +50,7 @@ export function ProductDetailPage() {
     }
   };
 
-  if (isLoadingProject) {
+  if (isLoadingProduct) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-4xl mx-auto px-4">
@@ -60,7 +60,7 @@ export function ProductDetailPage() {
     );
   }
 
-  if (!project) {
+  if (!product) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-4xl mx-auto px-4">
@@ -78,10 +78,10 @@ export function ProductDetailPage() {
   }
 
   const statusColor =
-    project.status === 'ACTIVE'
+    product.status === 'ACTIVE'
       ? 'bg-green-100 text-green-800'
       : 'bg-gray-100 text-gray-800';
-  const statusText = project.status === 'ACTIVE' ? 'アクティブ' : 'アーカイブ';
+  const statusText = product.status === 'ACTIVE' ? 'アクティブ' : 'アーカイブ';
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -98,7 +98,7 @@ export function ProductDetailPage() {
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">
-                {project.name}
+                {product.name}
               </h1>
               <span
                 className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium mt-2 ${statusColor}`}
@@ -173,7 +173,7 @@ export function ProductDetailPage() {
                     説明
                   </h2>
                   <p className="text-gray-900 whitespace-pre-wrap">
-                    {project.description || '説明がありません'}
+                    {product.description || '説明がありません'}
                   </p>
                 </section>
 
@@ -182,15 +182,15 @@ export function ProductDetailPage() {
                   <h2 className="text-sm font-medium text-gray-500 mb-2">
                     リポジトリURL
                   </h2>
-                  {project.repositoryUrl ? (
+                  {product.repositoryUrl ? (
                     <a
-                      href={project.repositoryUrl}
+                      href={product.repositoryUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:text-blue-800 hover:underline"
-                      aria-label={`リポジトリ ${project.repositoryUrl} を新しいタブで開く`}
+                      aria-label={`リポジトリ ${product.repositoryUrl} を新しいタブで開く`}
                     >
-                      {project.repositoryUrl}
+                      {product.repositoryUrl}
                     </a>
                   ) : (
                     <p className="text-gray-400">未設定</p>
@@ -208,7 +208,7 @@ export function ProductDetailPage() {
                         プロダクトID
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900 font-mono">
-                        {project.id}
+                        {product.id}
                       </dd>
                     </div>
                     <div>
@@ -224,9 +224,9 @@ export function ProductDetailPage() {
                         作成日時
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900">
-                        <time dateTime={project.createdAt}>
-                          {project.createdAt
-                            ? new Date(project.createdAt).toLocaleString(
+                        <time dateTime={product.createdAt}>
+                          {product.createdAt
+                            ? new Date(product.createdAt).toLocaleString(
                                 'ja-JP',
                               )
                             : '-'}
@@ -238,9 +238,9 @@ export function ProductDetailPage() {
                         更新日時
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900">
-                        <time dateTime={project.updatedAt}>
-                          {project.updatedAt
-                            ? new Date(project.updatedAt).toLocaleString(
+                        <time dateTime={product.updatedAt}>
+                          {product.updatedAt
+                            ? new Date(product.updatedAt).toLocaleString(
                                 'ja-JP',
                               )
                             : '-'}

@@ -9,10 +9,10 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const statusColor =
-    project.status === 'ACTIVE'
+    product.status === 'ACTIVE'
       ? 'bg-green-100 text-green-800'
       : 'bg-gray-100 text-gray-800';
-  const statusText = project.status === 'ACTIVE' ? 'アクティブ' : 'アーカイブ';
+  const statusText = product.status === 'ACTIVE' ? 'アクティブ' : 'アーカイブ';
 
   return (
     <article className="h-full">
@@ -25,7 +25,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <div className="flex justify-between items-start mb-4">
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">
-                {project.name}
+                {product.name}
               </h3>
               <span
                 className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusColor}`}
@@ -35,24 +35,24 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
           </div>
 
-          {project.description && (
+          {product.description && (
             <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
-              {project.description}
+              {product.description}
             </p>
           )}
 
           <div className="mt-auto space-y-2">
-            {project.repositoryUrl && (
+            {product.repositoryUrl && (
               <div>
                 <a
-                  href={project.repositoryUrl}
+                  href={product.repositoryUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  aria-label={`リポジトリ ${project.repositoryUrl} を新しいタブで開く`}
+                  aria-label={`リポジトリ ${product.repositoryUrl} を新しいタブで開く`}
                   className="text-sm text-blue-600 hover:text-blue-800 hover:underline truncate inline-block max-w-full cursor-pointer"
                 >
-                  {project.repositoryUrl}
+                  {product.repositoryUrl}
                 </a>
               </div>
             )}

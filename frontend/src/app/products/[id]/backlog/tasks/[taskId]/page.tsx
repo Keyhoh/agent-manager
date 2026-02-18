@@ -3,37 +3,37 @@
 import { use } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  useGetTasksByTaskIdQuery,
-  usePutTasksByTaskIdMutation,
-  useDeleteTasksByTaskIdMutation,
+  useGetBacklogItemsByBacklogItemIdQuery,
+  usePutBacklogItemsByBacklogItemIdMutation,
+  useDeleteBacklogItemsByBacklogItemIdMutation,
 } from '@/libs/api';
-import { TaskForm } from '@/components/features/tasks';
+import { BacklogItemForm } from '@/components/features/backlog-items';
 import { Button, Spinner } from '@/components/core';
-import type { UpdateTaskRequest } from '@/libs/api';
+import type { UpdateBacklogItemRequest } from '@/libs/api';
 
-export default function TaskDetailPage(props: {
+export default function BacklogItemDetailPage(props: {
   params: Promise<{ id: string; taskId: string }>;
 }) {
   const params = use(props.params);
   const router = useRouter();
   const {
-    data: task,
+    data: backlogItem,
     isLoading,
     error,
-  } = useGetTasksByTaskIdQuery({ taskId: params.taskId });
-  const [updateTask, { isLoading: isUpdating }] = usePutTasksByTaskIdMutation();
-  const [deleteTask, { isLoading: isDeleting }] =
-    useDeleteTasksByTaskIdMutation();
+  } = useGetBacklogItemsByBacklogItemIdQuery({ backlogItemId: params.taskId });
+  const [updateBacklogItem, { isLoading: isUpdating }] = usePutBacklogItemsByBacklogItemIdMutation();
+  const [deleteBacklogItem, { isLoading: isDeleting }] =
+    useDeleteBacklogItemsByBacklogItemIdMutation();
 
-  const handleSubmit = async (data: UpdateTaskRequest) => {
+  const handleSubmit = async (data: UpdateBacklogItemRequest) => {
     try {
-      await updateTask({
-        taskId: params.taskId,
-        updateTaskRequest: data,
+      await updateBacklogItem({
+        backlogItemId: params.taskId,
+        updateBacklogItemRequest: data,
       }).unwrap();
-      router.push(`/projects/${params.id}/backlog`);
+      router.push(`/products/${params.id}/backlog`);
     } catch (error) {
-      console.error('Failed to update task:', error);
+      console.error('Failed to update backlog item:', error);
     }
   };
 
@@ -43,10 +43,10 @@ export default function TaskDetailPage(props: {
     }
 
     try {
-      await deleteTask({ taskId: params.taskId }).unwrap();
-      router.push(`/projects/${params.id}/backlog`);
+      await deleteBacklogItem({ backlogItemId: params.taskId }).unwrap();
+      router.push(`/products/${params.id}/backlog`);
     } catch (error) {
-      console.error('Failed to delete task:', error);
+      console.error('Failed to delete backlog item:', error);
     }
   };
 
@@ -62,7 +62,7 @@ export default function TaskDetailPage(props: {
     );
   }
 
-  if (error || !task) {
+  if (error || !backlogItem) {
     return (
       <main className="container mx-auto px-4 py-8">
         <p className="text-red-600">
@@ -84,15 +84,15 @@ export default function TaskDetailPage(props: {
           {isDeleting ? '削除中...' : '削除'}
         </Button>
       </div>
-      <TaskForm
-        projectId={params.id}
+      <BacklogItemForm
+        productId={params.id}
         initialData={{
-          title: task.title,
-          description: task.description,
-          priority: task.priority,
-          status: task.status,
-          storyPoint: task.storyPoint ?? undefined,
-          assignedAgentId: task.assignedAgentId ?? undefined,
+          title: backlogItem.title,
+          description: backlogItem.description,
+          priority: backlogItem.priority,
+          status: backlogItem.status,
+          storyPoint: backlogItem.storyPoint ?? undefined,
+          assignedAgentId: backlogItem.assignedAgentId ?? undefined,
         }}
         onSubmit={handleSubmit}
         onCancel={handleCancel}

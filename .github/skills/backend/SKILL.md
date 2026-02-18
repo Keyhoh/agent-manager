@@ -90,7 +90,7 @@ datasource db {
 
 #### Repository実装
 
-- `*.[技術名].repository.ts`: 実装ファイル（例: `project.prisma.repository.ts`）
+- `*.[技術名].repository.ts`: 実装ファイル（例: `product.prisma.repository.ts`）
 - 技術スタックを明示することで、複数の実装（例: In-Memory, Mock）を識別可能にする
 
 #### Controller構成
@@ -112,9 +112,9 @@ presentation/controller/[entity]/
 ```typescript
 import { v7 as uuidv7 } from 'uuid';
 
-export class Project {
-  static create(props: Omit<ProjectProps, 'id' | 'createdAt' | 'updatedAt'>): Project {
-    return new Project({
+export class Product {
+  static create(props: Omit<ProductProps, 'id' | 'createdAt' | 'updatedAt'>): Product {
+    return new Product({
       ...props,
       id: uuidv7(), // タイムスタンプベース、ソート可能
       createdAt: new Date(),
@@ -134,13 +134,13 @@ export class Project {
 ドメインの型安全性を高めるため、`domain/type/`にValue Objectを配置：
 
 ```typescript
-// domain/type/project-id.ts
-export class ProjectId {
+// domain/type/product-id.ts
+export class ProductId {
   private constructor(private readonly value: string) {}
   
-  static of(value: string): ProjectId {
+  static of(value: string): ProductId {
     // バリデーションロジック
-    return new ProjectId(value);
+    return new ProductId(value);
   }
   
   getValue(): string {
@@ -182,22 +182,22 @@ app.module.ts
 
 ```typescript
 @Injectable()
-export class ProjectService {
+export class ProductService {
   constructor(
-    @Inject(PROJECT_REPOSITORY)
-    private readonly projectRepository: ProjectRepository,
+    @Inject(PRODUCT_REPOSITORY)
+    private readonly productRepository: ProductRepository,
   ) {}
 
-  async save(project: Project): Promise<Project> {
-    return this.projectRepository.save(project);
+  async save(product: Product): Promise<Product> {
+    return this.productRepository.save(product);
   }
 
-  async findById(id: string): Promise<Project> {
-    const project = await this.projectRepository.findById(id);
-    if (!project) {
-      throw new NotFoundException(`Project with ID ${id} not found`);
+  async findById(id: string): Promise<Product> {
+    const product = await this.productRepository.findById(id);
+    if (!product) {
+      throw new NotFoundException(`Product with ID ${id} not found`);
     }
-    return project;
+    return product;
   }
 }
 ```
@@ -214,26 +214,26 @@ export class ProjectService {
 ```typescript
 // 例: 複数のServiceを組み合わせる場合にUseCaseを使用
 @Injectable()
-export class CreateProjectWithInitialTasksUseCase {
+export class CreateProductWithInitialBacklogItemsUseCase {
   constructor(
-    private readonly projectService: ProjectService,
-    private readonly taskService: TaskService,
+    private readonly productService: ProductService,
+    private readonly backlogItemService: BacklogItemService,
     private readonly notificationService: NotificationService,
   ) {}
 
-  async execute(command: CreateProjectCommand): Promise<Project> {
-    // 1. プロジェクト作成
-    const project = await this.projectService.save(
-      Project.create(command)
+  async execute(command: CreateProductCommand): Promise<Product> {
+    // 1. プロダクト作成
+    const product = await this.productService.save(
+      Product.create(command)
     );
     
-    // 2. 初期タスク作成
-    await this.taskService.createInitialTasks(project.id);
+    // 2. 初期バックログアイテム作成
+    await this.backlogItemService.createInitialItems(product.id);
     
     // 3. 通知送信
-    await this.notificationService.notifyProjectCreated(project);
+    await this.notificationService.notifyProductCreated(product);
     
-    return project;
+    return product;
   }
 }
 ```

@@ -1,26 +1,26 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { usePostTasksMutation } from '@/libs/api';
-import { TaskForm } from '@/components/features/tasks';
-import type { CreateTaskRequest, UpdateTaskRequest } from '@/libs/api';
+import { usePostBacklogItemsMutation } from '@/libs/api';
+import { BacklogItemForm } from '@/components/features/backlog-items';
+import type { CreateBacklogItemRequest, UpdateBacklogItemRequest } from '@/libs/api';
 import { use } from 'react';
 
-export default function NewTaskPage(props: {
+export default function NewBacklogItemPage(props: {
   params: Promise<{ id: string }>;
 }) {
   const params = use(props.params);
   const router = useRouter();
-  const [createTask, { isLoading }] = usePostTasksMutation();
+  const [createBacklogItem, { isLoading }] = usePostBacklogItemsMutation();
 
-  const handleSubmit = async (data: CreateTaskRequest | UpdateTaskRequest) => {
+  const handleSubmit = async (data: CreateBacklogItemRequest | UpdateBacklogItemRequest) => {
     try {
-      await createTask({
-        createTaskRequest: data as CreateTaskRequest,
+      await createBacklogItem({
+        createBacklogItemRequest: data as CreateBacklogItemRequest,
       }).unwrap();
-      router.push(`/projects/${params.id}/backlog`);
+      router.push(`/products/${params.id}/backlog`);
     } catch (error) {
-      console.error('Failed to create task:', error);
+      console.error('Failed to create backlog item:', error);
     }
   };
 
@@ -31,8 +31,8 @@ export default function NewTaskPage(props: {
   return (
     <main className="container mx-auto px-4 py-8 max-w-2xl">
       <h1 className="text-3xl font-bold mb-8">新規バックログアイテム作成</h1>
-      <TaskForm
-        projectId={params.id}
+      <BacklogItemForm
+        productId={params.id}
         onSubmit={handleSubmit}
         onCancel={handleCancel}
         isLoading={isLoading}

@@ -1,7 +1,7 @@
 'use client';
 
-import { useGetProjectsByProjectIdBacklogQuery } from '@/libs/api';
-import { TaskCard } from '@/components/features/tasks';
+import { useGetProductsByProductIdBacklogQuery } from '@/libs/api';
+import { BacklogItemCard } from '@/components/features/backlog-items';
 import { Button, Link, Spinner } from '@/components/core';
 import { use } from 'react';
 
@@ -10,10 +10,10 @@ export default function BacklogPage(props: {
 }) {
   const params = use(props.params);
   const {
-    data: tasks,
+    data: backlogItems,
     isLoading,
     error,
-  } = useGetProjectsByProjectIdBacklogQuery({ projectId: params.id });
+  } = useGetProductsByProductIdBacklogQuery({ productId: params.id });
 
   if (isLoading) {
     return (
@@ -38,11 +38,11 @@ export default function BacklogPage(props: {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">バックログ</h1>
         <div className="flex gap-4">
-          <Link href={`/projects/${params.id}`} variant="secondary">
+          <Link href={`/products/${params.id}`} variant="secondary">
             プロダクトに戻る
           </Link>
           <Link
-            href={`/projects/${params.id}/backlog/tasks/new`}
+            href={`/products/${params.id}/backlog/tasks/new`}
             variant="primary"
           >
             新規バックログアイテム作成
@@ -50,13 +50,13 @@ export default function BacklogPage(props: {
         </div>
       </div>
 
-      {tasks && tasks.length === 0 ? (
+      {backlogItems && backlogItems.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-gray-500 mb-4">
             バックログアイテムがまだありません
           </p>
           <Link
-            href={`/projects/${params.id}/backlog/tasks/new`}
+            href={`/products/${params.id}/backlog/tasks/new`}
             variant="primary"
           >
             最初のバックログアイテムを作成
@@ -64,8 +64,8 @@ export default function BacklogPage(props: {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {tasks?.map((task) => (
-            <TaskCard key={task.id} task={task} projectId={params.id} />
+          {backlogItems?.map((backlogItem) => (
+            <BacklogItemCard key={backlogItem.id} backlogItem={backlogItem} productId={params.id} />
           ))}
         </div>
       )}

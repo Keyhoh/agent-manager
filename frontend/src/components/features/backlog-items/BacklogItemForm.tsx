@@ -6,20 +6,20 @@ import { Input } from '@/components/core';
 import { TextArea } from '@/components/core';
 import { Label } from '@/components/core';
 import { Select } from '@/components/core';
-import type { CreateTaskRequest, UpdateTaskRequest } from '@/libs/api';
+import type { CreateBacklogItemRequest, UpdateBacklogItemRequest } from '@/libs/api';
 
-interface TaskFormProps {
-  projectId: string;
-  initialData?: UpdateTaskRequest & { id?: string };
+interface BacklogItemFormProps {
+  productId: string;
+  initialData?: UpdateBacklogItemRequest & { id?: string };
   onSubmit: (
-    data: CreateTaskRequest | UpdateTaskRequest,
+    data: CreateBacklogItemRequest | UpdateBacklogItemRequest,
   ) => Promise<void> | void;
   onCancel: () => void;
   isLoading?: boolean;
 }
 
 const priorityOptions: Array<{
-  value: CreateTaskRequest['priority'];
+  value: CreateBacklogItemRequest['priority'];
   label: string;
 }> = [
   { value: 'LOW', label: '低' },
@@ -29,7 +29,7 @@ const priorityOptions: Array<{
 ];
 
 const statusOptions: Array<{
-  value: UpdateTaskRequest['status'];
+  value: UpdateBacklogItemRequest['status'];
   label: string;
 }> = [
   { value: 'BACKLOG', label: 'バックログ' },
@@ -39,13 +39,13 @@ const statusOptions: Array<{
   { value: 'DONE', label: '完了' },
 ];
 
-export function TaskForm({
-  projectId,
+export function BacklogItemForm({
+  productId,
   initialData,
   onSubmit,
   onCancel,
   isLoading,
-}: TaskFormProps) {
+}: BacklogItemFormProps) {
   const [title, setTitle] = useState(initialData?.title ?? '');
   const [description, setDescription] = useState(
     initialData?.description ?? '',
@@ -86,7 +86,7 @@ export function TaskForm({
           storyPoint: storyPoint ? parseInt(storyPoint, 10) : undefined,
         }
       : {
-          projectId,
+          productId,
           title,
           description,
           priority,
@@ -96,7 +96,7 @@ export function TaskForm({
     try {
       await onSubmit(data);
     } catch (error) {
-      console.error('Failed to submit task:', error);
+      console.error('Failed to submit backlog item:', error);
     }
   };
 

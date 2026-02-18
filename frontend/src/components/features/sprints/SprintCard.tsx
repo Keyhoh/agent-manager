@@ -5,7 +5,7 @@ import { Sprint } from '@/libs/api';
 
 interface SprintCardProps {
   sprint: Sprint;
-  projectId: string;
+  productId: string;
 }
 
 const statusLabels: Record<string, string> = {
@@ -20,7 +20,7 @@ const statusColors: Record<string, string> = {
   COMPLETED: 'bg-green-100 text-green-800',
 };
 
-export function SprintCard({ sprint, projectId }: SprintCardProps) {
+export function SprintCard({ sprint, productId }: SprintCardProps) {
   const statusColor = sprint.status
     ? statusColors[sprint.status]
     : 'bg-gray-100 text-gray-800';
@@ -29,7 +29,7 @@ export function SprintCard({ sprint, projectId }: SprintCardProps) {
   return (
     <article className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
       <Link
-        href={`/projects/${projectId}/sprints/${sprint.id}`}
+        href={`/products/${productId}/sprints/${sprint.id}`}
         className="block space-y-3"
       >
         <div className="flex items-start justify-between gap-2">

@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { Task } from '@/libs/api';
+import { Task as BacklogItem } from '@/libs/api';
 
-interface TaskCardProps {
-  task: Task;
-  projectId: string;
+interface BacklogItemCardProps {
+  backlogItem: BacklogItem;
+  productId: string;
 }
 
 const priorityLabels: Record<string, string> = {
@@ -30,21 +30,21 @@ const statusLabels: Record<string, string> = {
   DONE: '完了',
 };
 
-export function TaskCard({ task, projectId }: TaskCardProps) {
-  const priorityColor = task.priority
-    ? priorityColors[task.priority]
+export function BacklogItemCard({ backlogItem, productId }: BacklogItemCardProps) {
+  const priorityColor = backlogItem.priority
+    ? priorityColors[backlogItem.priority]
     : 'bg-gray-100 text-gray-800';
-  const priorityLabel = task.priority ? priorityLabels[task.priority] : '不明';
-  const statusLabel = task.status ? statusLabels[task.status] : '不明';
+  const priorityLabel = backlogItem.priority ? priorityLabels[backlogItem.priority] : '不明';
+  const statusLabel = backlogItem.status ? statusLabels[backlogItem.status] : '不明';
 
   return (
     <article className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
       <Link
-        href={`/projects/${projectId}/backlog/tasks/${task.id}`}
+        href={`/products/${productId}/backlog/tasks/${backlogItem.id}`}
         className="block space-y-3"
       >
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold text-lg line-clamp-2">{task.title}</h3>
+          <h3 className="font-semibold text-lg line-clamp-2">{backlogItem.title}</h3>
           <span
             className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${priorityColor}`}
           >
@@ -52,22 +52,22 @@ export function TaskCard({ task, projectId }: TaskCardProps) {
           </span>
         </div>
 
-        {task.description && (
+        {backlogItem.description && (
           <p className="text-gray-600 text-sm line-clamp-3">
-            {task.description}
+            {backlogItem.description}
           </p>
         )}
 
         <div className="flex items-center gap-4 text-sm text-gray-500">
           <span>ステータス: {statusLabel}</span>
-          {task.storyPoint !== null && task.storyPoint !== undefined && (
-            <span>SP: {task.storyPoint}</span>
+          {backlogItem.storyPoint !== null && backlogItem.storyPoint !== undefined && (
+            <span>SP: {backlogItem.storyPoint}</span>
           )}
         </div>
 
-        {task.updatedAt && (
-          <time className="text-xs text-gray-400" dateTime={task.updatedAt}>
-            更新: {new Date(task.updatedAt).toLocaleDateString('ja-JP')}
+        {backlogItem.updatedAt && (
+          <time className="text-xs text-gray-400" dateTime={backlogItem.updatedAt}>
+            更新: {new Date(backlogItem.updatedAt).toLocaleDateString('ja-JP')}
           </time>
         )}
       </Link>

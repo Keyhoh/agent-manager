@@ -7,6 +7,6 @@ export const emptySplitApi = createApi({
   baseQuery: fetchBaseQuery({ 
     baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api'
   }),
-  tagTypes: ['Project', 'Task', 'Sprint', 'Agent', 'Review'],
+  tagTypes: ['Product', 'BacklogItem', 'Sprint', 'Agent', 'Review'],
   endpoints: () => ({}),
 });

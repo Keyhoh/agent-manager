@@ -123,7 +123,7 @@ src/
      baseQuery: fetchBaseQuery({ 
        baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api'
      }),
-     tagTypes: ['Project', 'Task', 'Sprint', 'Agent', 'Review'],
+     tagTypes: ['Product', 'BacklogItem', 'Sprint', 'Agent', 'Review'],
      endpoints: () => ({}),
    });
    ```
@@ -165,19 +165,19 @@ src/
 6. **コンポーネントでの使用**
    ```typescript
    import {
-     useGetProjectsQuery,
-     usePostProjectsMutation,
-     usePutProjectsByProjectIdMutation,
-     useDeleteProjectsByProjectIdMutation,
+     useGetProductsQuery,
+     usePostProductsMutation,
+     usePutProductsByProductIdMutation,
+     useDeleteProductsByProductIdMutation,
    } from '@/services/api';
-   import type { Project, CreateProjectRequest } from '@/services/api';
+   import type { Product, CreateProductRequest } from '@/services/api';
 
-   export default function ProjectsPage() {
-     const { data: projects, isLoading, error } = useGetProjectsQuery();
-     const [createProject] = usePostProjectsMutation();
+   export default function ProductsPage() {
+     const { data: products, isLoading, error } = useGetProductsQuery();
+     const [createProduct] = usePostProductsMutation();
 
-     const handleCreate = async (data: CreateProjectRequest) => {
-       await createProject({ createProjectRequest: data }).unwrap();
+     const handleCreate = async (data: CreateProductRequest) => {
+       await createProduct({ createProductRequest: data }).unwrap();
      };
    }
    ```
