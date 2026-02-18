@@ -1,11 +1,11 @@
 'use client';
 
-import { useGetProjectsQuery } from '@/libs/api';
-import { ProjectCard } from '@/components/features/projects/ProjectCard';
+import { useGetProductsQuery } from '@/libs/api';
+import { ProductCard } from '@/components/features/products/ProductCard';
 import { Link, Spinner } from '@/components/core';
 
-export function ProjectsListPage() {
-  const { data: projects, isLoading, error } = useGetProjectsQuery();
+export function ProductsListPage() {
+  const { data: products, isLoading, error } = useGetProductsQuery();
 
   if (error) {
     return (
@@ -29,7 +29,7 @@ export function ProjectsListPage() {
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-bold text-gray-900">プロダクト管理</h1>
             <Link
-              href="/projects/new"
+              href="/products/new"
               variant="primary"
               aria-label="新しいプロダクトを作成"
             >
@@ -42,17 +42,17 @@ export function ProjectsListPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {isLoading ? (
           <Spinner size="lg" className="py-12" />
-        ) : projects && projects.length > 0 ? (
+        ) : products && products.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
         ) : (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">プロダクトがありません</p>
             <Link
-              href="/projects/new"
+              href="/products/new"
               variant="ghost"
               className="mt-4 inline-block px-4 py-2"
             >

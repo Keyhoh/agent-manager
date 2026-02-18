@@ -1,13 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import type { Project } from '@/libs/api';
+import type { Product } from '@/libs/api';
 
-interface ProjectCardProps {
-  project: Project;
+interface ProductCardProps {
+  product: Product;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProductCard({ product }: ProductCardProps) {
   const statusColor =
     project.status === 'ACTIVE'
       ? 'bg-green-100 text-green-800'
@@ -17,8 +17,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <article className="h-full">
       <Link
-        href={`/projects/${project.id}`}
-        aria-label={`${project.name}の詳細を表示`}
+        href={`/products/${product.id}`}
+        aria-label={`${product.name}の詳細を表示`}
         className="block h-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg"
       >
         <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg hover:border-blue-300 transition-all h-full flex flex-col">

@@ -1,38 +1,34 @@
 'use client';
 
 import { useState } from 'react';
-import type { Project, UpdateProjectRequest } from '@/libs/api';
-import { Button, Input, TextArea, Select, Label } from '@/components/core';
+import type { CreateProductRequest } from '@/libs/api';
+import { Button, Input, TextArea, Label } from '@/components/core';
 
-interface UpdateProjectFormProps {
-  project: Project;
-  onSubmit: (data: UpdateProjectRequest) => void;
+interface CreateProductFormProps {
+  onSubmit: (data: CreateProductRequest) => void;
   onCancel: () => void;
   isLoading?: boolean;
 }
 
-export function UpdateProjectForm({
-  project,
+export function CreateProductForm({
   onSubmit,
   onCancel,
   isLoading,
-}: UpdateProjectFormProps) {
-  const [name, setName] = useState(project.name);
-  const [description, setDescription] = useState(project.description);
-  const [status, setStatus] = useState<'ACTIVE' | 'ARCHIVED'>(
-    project.status || 'ACTIVE',
-  );
+}: CreateProductFormProps) {
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [repositoryUrl, setRepositoryUrl] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ name, description, status });
+    onSubmit({ name, description, repositoryUrl });
   };
 
   return (
     <form
       onSubmit={handleSubmit}
       className="space-y-4"
-      aria-label="プロダクト編集フォーム"
+      aria-label="プロダクト作成フォーム"
     >
       <div>
         <Label htmlFor="name" required>
@@ -72,22 +68,22 @@ export function UpdateProjectForm({
       </div>
 
       <div>
-        <Label htmlFor="status" required>
-          ステータス
+        <Label htmlFor="repositoryUrl" required>
+          リポジトリURL
         </Label>
-        <Select
-          id="status"
-          name="status"
-          value={status}
-          onChange={(e) => setStatus(e.target.value as 'ACTIVE' | 'ARCHIVED')}
+        <Input
+          id="repositoryUrl"
+          name="repositoryUrl"
+          type="url"
+          value={repositoryUrl}
+          onChange={(e) => setRepositoryUrl(e.target.value)}
+          placeholder="https://github.com/user/repo"
+          autoComplete="url"
           required
           aria-required="true"
           disabled={isLoading}
           aria-disabled={isLoading}
-        >
-          <option value="ACTIVE">アクティブ</option>
-          <option value="ARCHIVED">アーカイブ</option>
-        </Select>
+        />
       </div>
 
       <div className="flex gap-3 pt-4">
@@ -101,7 +97,7 @@ export function UpdateProjectForm({
           キャンセル
         </Button>
         <Button type="submit" variant="primary" fullWidth isLoading={isLoading}>
-          更新
+          作成
         </Button>
       </div>
     </form>

@@ -1,34 +1,38 @@
 'use client';
 
 import { useState } from 'react';
-import type { CreateProjectRequest } from '@/libs/api';
-import { Button, Input, TextArea, Label } from '@/components/core';
+import type { Product, UpdateProductRequest } from '@/libs/api';
+import { Button, Input, TextArea, Select, Label } from '@/components/core';
 
-interface CreateProjectFormProps {
-  onSubmit: (data: CreateProjectRequest) => void;
+interface UpdateProductFormProps {
+  product: Product;
+  onSubmit: (data: UpdateProductRequest) => void;
   onCancel: () => void;
   isLoading?: boolean;
 }
 
-export function CreateProjectForm({
+export function UpdateProductForm({
+  product,
   onSubmit,
   onCancel,
   isLoading,
-}: CreateProjectFormProps) {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [repositoryUrl, setRepositoryUrl] = useState('');
+}: UpdateProductFormProps) {
+  const [name, setName] = useState(project.name);
+  const [description, setDescription] = useState(project.description);
+  const [status, setStatus] = useState<'ACTIVE' | 'ARCHIVED'>(
+    project.status || 'ACTIVE',
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ name, description, repositoryUrl });
+    onSubmit({ name, description, status });
   };
 
   return (
     <form
       onSubmit={handleSubmit}
       className="space-y-4"
-      aria-label="プロダクト作成フォーム"
+      aria-label="プロダクト編集フォーム"
     >
       <div>
         <Label htmlFor="name" required>
@@ -68,22 +72,22 @@ export function CreateProjectForm({
       </div>
 
       <div>
-        <Label htmlFor="repositoryUrl" required>
-          リポジトリURL
+        <Label htmlFor="status" required>
+          ステータス
         </Label>
-        <Input
-          id="repositoryUrl"
-          name="repositoryUrl"
-          type="url"
-          value={repositoryUrl}
-          onChange={(e) => setRepositoryUrl(e.target.value)}
-          placeholder="https://github.com/user/repo"
-          autoComplete="url"
+        <Select
+          id="status"
+          name="status"
+          value={status}
+          onChange={(e) => setStatus(e.target.value as 'ACTIVE' | 'ARCHIVED')}
           required
           aria-required="true"
           disabled={isLoading}
           aria-disabled={isLoading}
-        />
+        >
+          <option value="ACTIVE">アクティブ</option>
+          <option value="ARCHIVED">アーカイブ</option>
+        </Select>
       </div>
 
       <div className="flex gap-3 pt-4">
@@ -97,7 +101,7 @@ export function CreateProjectForm({
           キャンセル
         </Button>
         <Button type="submit" variant="primary" fullWidth isLoading={isLoading}>
-          作成
+          更新
         </Button>
       </div>
     </form>

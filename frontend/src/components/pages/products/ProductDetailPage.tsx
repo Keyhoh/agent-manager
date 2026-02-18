@@ -3,33 +3,33 @@
 import { useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import {
-  useGetProjectsByProjectIdQuery,
-  usePutProjectsByProjectIdMutation,
-  useDeleteProjectsByProjectIdMutation,
+  useGetProductsByProductIdQuery,
+  usePutProductsByProductIdMutation,
+  useDeleteProductsByProductIdMutation,
 } from '@/libs/api';
-import { UpdateProjectForm } from '@/components/features/projects/UpdateProjectForm';
+import { UpdateProductForm } from '@/components/features/products/UpdateProductForm';
 import { Link, Button, Spinner } from '@/components/core';
-import type { UpdateProjectRequest } from '@/libs/api';
+import type { UpdateProductRequest } from '@/libs/api';
 
-export function ProjectDetailPage() {
+export function ProductDetailPage() {
   const router = useRouter();
   const params = useParams();
-  const projectId = params.id as string;
+  const productId = params.id as string;
 
-  const { data: project, isLoading: isLoadingProject } =
-    useGetProjectsByProjectIdQuery({ projectId });
-  const [updateProject, { isLoading: isUpdating }] =
-    usePutProjectsByProjectIdMutation();
-  const [deleteProject] = useDeleteProjectsByProjectIdMutation();
+  const { data: product, isLoading: isLoadingProduct } =
+    useGetProductsByProductIdQuery({ productId });
+  const [updateProduct, { isLoading: isUpdating }] =
+    usePutProductsByProductIdMutation();
+  const [deleteProduct] = useDeleteProductsByProductIdMutation();
 
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleUpdate = async (data: UpdateProjectRequest) => {
+  const handleUpdate = async (data: UpdateProductRequest) => {
     try {
-      await updateProject({ projectId, updateProjectRequest: data }).unwrap();
+      await updateProduct({ productId, updateProductRequest: data }).unwrap();
       setIsEditing(false);
     } catch (err) {
-      console.error('Failed to update project:', err);
+      console.error('Failed to update product:', err);
       alert('プロダクトの更新に失敗しました');
     }
   };
@@ -42,10 +42,10 @@ export function ProjectDetailPage() {
       return;
     }
     try {
-      await deleteProject({ projectId }).unwrap();
-      router.push('/projects');
+      await deleteProduct({ productId }).unwrap();
+      router.push('/products');
     } catch (err) {
-      console.error('Failed to delete project:', err);
+      console.error('Failed to delete product:', err);
       alert('プロダクトの削除に失敗しました');
     }
   };
@@ -68,7 +68,7 @@ export function ProjectDetailPage() {
             <p className="text-red-600 text-lg mb-4">
               プロダクトが見つかりません
             </p>
-            <Link href="/projects" variant="primary">
+            <Link href="/products" variant="primary">
               プロダクト一覧に戻る
             </Link>
           </div>
@@ -88,7 +88,7 @@ export function ProjectDetailPage() {
       <div className="max-w-4xl mx-auto px-4">
         {/* ナビゲーション */}
         <nav className="mb-6" aria-label="パンくずリスト">
-          <Link href="/projects" variant="primary">
+          <Link href="/products" variant="primary">
             ← プロダクト一覧に戻る
           </Link>
         </nav>
@@ -113,13 +113,13 @@ export function ProjectDetailPage() {
                 aria-label="プロダクト操作"
               >
                 <Link
-                  href={`/projects/${projectId}/backlog`}
+                  href={`/products/${productId}/backlog`}
                   variant="secondary"
                 >
                   バックログ
                 </Link>
                 <Link
-                  href={`/projects/${projectId}/sprints`}
+                  href={`/products/${productId}/sprints`}
                   variant="secondary"
                 >
                   スプリント
@@ -156,8 +156,8 @@ export function ProjectDetailPage() {
               >
                 プロダクト編集
               </h2>
-              <UpdateProjectForm
-                project={project}
+              <UpdateProductForm
+                product={product}
                 onSubmit={handleUpdate}
                 onCancel={() => setIsEditing(false)}
                 isLoading={isUpdating}

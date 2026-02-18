@@ -1,34 +1,34 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { usePostProjectsMutation } from '@/libs/api';
-import { CreateProjectForm } from '@/components/features/projects/CreateProjectForm';
+import { usePostProductsMutation } from '@/libs/api';
+import { CreateProductForm } from '@/components/features/products/CreateProductForm';
 import { Link } from '@/components/core';
-import type { CreateProjectRequest } from '@/libs/api';
+import type { CreateProductRequest } from '@/libs/api';
 
-export function NewProjectPage() {
+export function NewProductPage() {
   const router = useRouter();
-  const [createProject, { isLoading }] = usePostProjectsMutation();
+  const [createProduct, { isLoading }] = usePostProductsMutation();
 
-  const handleSubmit = async (data: CreateProjectRequest) => {
+  const handleSubmit = async (data: CreateProductRequest) => {
     try {
-      await createProject({ createProjectRequest: data }).unwrap();
-      router.push('/projects');
+      await createProduct({ createProductRequest: data }).unwrap();
+      router.push('/products');
     } catch (err) {
-      console.error('Failed to create project:', err);
+      console.error('Failed to create product:', err);
       alert('プロダクトの作成に失敗しました');
     }
   };
 
   const handleCancel = () => {
-    router.push('/projects');
+    router.push('/products');
   };
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-3xl mx-auto px-4">
         <nav className="mb-6" aria-label="パンくずリスト">
-          <Link href="/projects" variant="primary" className="text-sm">
+          <Link href="/products" variant="primary" className="text-sm">
             ← プロダクト一覧に戻る
           </Link>
         </nav>
@@ -50,7 +50,7 @@ export function NewProjectPage() {
             <h2 id="form-heading" className="sr-only">
               プロダクト作成フォーム
             </h2>
-            <CreateProjectForm
+            <CreateProductForm
               onSubmit={handleSubmit}
               onCancel={handleCancel}
               isLoading={isLoading}
