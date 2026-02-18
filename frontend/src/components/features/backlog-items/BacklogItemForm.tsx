@@ -6,7 +6,10 @@ import { Input } from '@/components/core';
 import { TextArea } from '@/components/core';
 import { Label } from '@/components/core';
 import { Select } from '@/components/core';
-import type { CreateBacklogItemRequest, UpdateBacklogItemRequest } from '@/libs/api';
+import type {
+  CreateBacklogItemRequest,
+  UpdateBacklogItemRequest,
+} from '@/libs/api';
 
 interface BacklogItemFormProps {
   productId: string;
@@ -50,9 +53,9 @@ export function BacklogItemForm({
   const [description, setDescription] = useState(
     initialData?.description ?? '',
   );
-  const [priority, setPriority] = useState<CreateBacklogItemRequest['priority']>(
-    initialData?.priority ?? 'MEDIUM',
-  );
+  const [priority, setPriority] = useState<
+    CreateBacklogItemRequest['priority']
+  >(initialData?.priority ?? 'MEDIUM');
   const [status, setStatus] = useState<UpdateBacklogItemRequest['status']>(
     initialData?.status ?? 'BACKLOG',
   );

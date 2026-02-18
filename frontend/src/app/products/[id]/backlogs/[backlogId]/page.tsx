@@ -12,7 +12,7 @@ import { Button, Spinner } from '@/components/core';
 import type { UpdateBacklogItemRequest } from '@/libs/api';
 
 export default function BacklogItemDetailPage(props: {
-  params: Promise<{ id: string; taskId: string }>;
+  params: Promise<{ id: string; backlogId: string }>;
 }) {
   const params = use(props.params);
   const router = useRouter();
@@ -20,18 +20,21 @@ export default function BacklogItemDetailPage(props: {
     data: backlogItem,
     isLoading,
     error,
-  } = useGetBacklogItemsByBacklogItemIdQuery({ backlogItemId: params.taskId });
-  const [updateBacklogItem, { isLoading: isUpdating }] = usePutBacklogItemsByBacklogItemIdMutation();
+  } = useGetBacklogItemsByBacklogItemIdQuery({
+    backlogItemId: params.backlogId,
+  });
+  const [updateBacklogItem, { isLoading: isUpdating }] =
+    usePutBacklogItemsByBacklogItemIdMutation();
   const [deleteBacklogItem, { isLoading: isDeleting }] =
     useDeleteBacklogItemsByBacklogItemIdMutation();
 
   const handleSubmit = async (data: UpdateBacklogItemRequest) => {
     try {
       await updateBacklogItem({
-        backlogItemId: params.taskId,
+        backlogItemId: params.backlogId,
         updateBacklogItemRequest: data,
       }).unwrap();
-      router.push(`/products/${params.id}/backlog`);
+      router.push(`/products/${params.id}/backlogs`);
     } catch (error) {
       console.error('Failed to update backlog item:', error);
     }
@@ -43,8 +46,8 @@ export default function BacklogItemDetailPage(props: {
     }
 
     try {
-      await deleteBacklogItem({ backlogItemId: params.taskId }).unwrap();
-      router.push(`/products/${params.id}/backlog`);
+      await deleteBacklogItem({ backlogItemId: params.backlogId }).unwrap();
+      router.push(`/products/${params.id}/backlogs`);
     } catch (error) {
       console.error('Failed to delete backlog item:', error);
     }

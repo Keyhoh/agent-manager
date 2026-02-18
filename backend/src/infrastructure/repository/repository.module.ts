@@ -5,6 +5,7 @@ import { SPRINT_REPOSITORY } from '@/domain/repository/sprint.repository';
 import { PrismaProductRepository } from './prisma/product.prisma.repository';
 import { PrismaBacklogItemRepository } from './prisma/backlog-item.prisma.repository';
 import { PrismaSprintRepository } from './prisma/sprint.prisma.repository';
+import { PrismaReviewRepository } from './prisma/review.prisma.repository';
 import { PrismaService } from './prisma/prisma.service';
 
 @Module({
@@ -22,7 +23,16 @@ import { PrismaService } from './prisma/prisma.service';
       provide: SPRINT_REPOSITORY,
       useClass: PrismaSprintRepository,
     },
+    {
+      provide: 'ReviewRepository',
+      useClass: PrismaReviewRepository,
+    },
   ],
-  exports: [PRODUCT_REPOSITORY, BACKLOG_ITEM_REPOSITORY, SPRINT_REPOSITORY],
+  exports: [
+    PRODUCT_REPOSITORY,
+    BACKLOG_ITEM_REPOSITORY,
+    SPRINT_REPOSITORY,
+    'ReviewRepository',
+  ],
 })
 export class RepositoryModule {}

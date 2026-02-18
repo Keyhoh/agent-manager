@@ -3,7 +3,10 @@
 import { useRouter } from 'next/navigation';
 import { usePostBacklogItemsMutation } from '@/libs/api';
 import { BacklogItemForm } from '@/components/features/backlog-items';
-import type { CreateBacklogItemRequest, UpdateBacklogItemRequest } from '@/libs/api';
+import type {
+  CreateBacklogItemRequest,
+  UpdateBacklogItemRequest,
+} from '@/libs/api';
 import { use } from 'react';
 
 export default function NewBacklogItemPage(props: {
@@ -13,7 +16,9 @@ export default function NewBacklogItemPage(props: {
   const router = useRouter();
   const [createBacklogItem, { isLoading }] = usePostBacklogItemsMutation();
 
-  const handleSubmit = async (data: CreateBacklogItemRequest | UpdateBacklogItemRequest) => {
+  const handleSubmit = async (
+    data: CreateBacklogItemRequest | UpdateBacklogItemRequest,
+  ) => {
     try {
       await createBacklogItem({
         createBacklogItemRequest: data as CreateBacklogItemRequest,

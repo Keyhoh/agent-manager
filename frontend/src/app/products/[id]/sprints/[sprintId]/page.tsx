@@ -89,13 +89,21 @@ export default function SprintDetailPage(props: {
         </section>
 
         <section>
-          <h2 className="text-xl font-semibold mb-4">スプリントバックログアイテム</h2>
+          <h2 className="text-xl font-semibold mb-4">
+            スプリントバックログアイテム
+          </h2>
           {backlogItems && backlogItems.length === 0 ? (
-            <p className="text-gray-500">バックログアイテムが割り当てられていません</p>
+            <p className="text-gray-500">
+              バックログアイテムが割り当てられていません
+            </p>
           ) : (
             <div className="space-y-4">
               {backlogItems?.map((backlogItem) => (
-                <BacklogItemCard key={backlogItem.id} backlogItem={backlogItem} productId={params.id} />
+                <BacklogItemCard
+                  key={backlogItem.id}
+                  backlogItem={backlogItem}
+                  productId={params.id}
+                />
               ))}
             </div>
           )}

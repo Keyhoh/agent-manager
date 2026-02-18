@@ -41,10 +41,7 @@ export default function BacklogPage(props: {
           <Link href={`/products/${params.id}`} variant="secondary">
             プロダクトに戻る
           </Link>
-          <Link
-            href={`/products/${params.id}/backlog/tasks/new`}
-            variant="primary"
-          >
+          <Link href={`/products/${params.id}/backlogs/new`} variant="primary">
             新規バックログアイテム作成
           </Link>
         </div>
@@ -55,17 +52,18 @@ export default function BacklogPage(props: {
           <p className="text-gray-500 mb-4">
             バックログアイテムがまだありません
           </p>
-          <Link
-            href={`/products/${params.id}/backlog/tasks/new`}
-            variant="primary"
-          >
+          <Link href={`/products/${params.id}/backlogs/new`} variant="primary">
             最初のバックログアイテムを作成
           </Link>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {backlogItems?.map((backlogItem) => (
-            <BacklogItemCard key={backlogItem.id} backlogItem={backlogItem} productId={params.id} />
+            <BacklogItemCard
+              key={backlogItem.id}
+              backlogItem={backlogItem}
+              productId={params.id}
+            />
           ))}
         </div>
       )}

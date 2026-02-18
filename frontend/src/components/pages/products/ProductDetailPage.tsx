@@ -113,7 +113,7 @@ export function ProductDetailPage() {
                 aria-label="プロダクト操作"
               >
                 <Link
-                  href={`/products/${productId}/backlog`}
+                  href={`/products/${productId}/backlogs`}
                   variant="secondary"
                 >
                   バックログ
